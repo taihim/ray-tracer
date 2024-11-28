@@ -105,8 +105,20 @@ class CustomTuple:
             return self
         raise ValueError("Can only normalize vectors (w == 0).")
 
+    # dot product represents the cosine of the angle between unit vectors
     def dot(self, v2: "CustomTuple") -> float:
         """Compute dot product of two vectors."""
         if compare_float(self.w, 0.0) and compare_float(v2.w, 0.0):
             return (self.x * v2.x) + (self.y * v2.y) + (self.z * v2.z) + (self.w * v2.w)
         raise ValueError("Can only compute dot product for vectors.")
+
+    # the new vector is perpendicular to both original vectors
+    def cross(self, v2: "CustomTuple") -> "CustomTuple":
+        """Compute cross product of two vectors."""
+        if compare_float(self.w, 0.0) and compare_float(v2.w, 0.0):
+            return CustomTuple.vector(
+                ((self.y * v2.z) - (self.z * v2.y)),
+                ((self.z * v2.x) - (self.x * v2.z)),
+                ((self.x * v2.y) - (self.y * v2.x)),
+            )
+        raise ValueError("Can only compute cross product for vectors.")

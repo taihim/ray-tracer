@@ -2,7 +2,7 @@ from math import sqrt
 
 import pytest
 
-from src.ray_tracer.rt_tuple import CustomTuple, compare_float
+from src.ray_tracer import CustomTuple, compare_float
 
 
 def test_point() -> None:
@@ -147,3 +147,16 @@ def test_dot_product() -> None:
     with pytest.raises(ValueError) as exc1:
         p1.dot(t1)
     assert str(exc1.value) == "Can only compute dot product for vectors."
+
+def test_cross_product() -> None:
+    v1 = CustomTuple.vector(1, 2, 3)
+    v2 = CustomTuple.vector(2, 3, 4)
+    p1 = CustomTuple.point(4, 0, 0)
+    t1 = CustomTuple(4, 0, 0, 1)
+
+    assert v1.cross(v2) == CustomTuple.vector(-1, 2, -1)
+    assert v2.cross(v1) == CustomTuple.vector(1, -2, 1)
+
+    with pytest.raises(ValueError) as exc1:
+        p1.cross(t1)
+    assert str(exc1.value) == "Can only compute cross product for vectors."
