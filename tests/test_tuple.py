@@ -1,3 +1,5 @@
+from math import sqrt
+
 import pytest
 
 from src.ray_tracer.rt_tuple import CustomTuple, compare_float
@@ -92,3 +94,44 @@ def test_multiplication() -> None:
 def test_divison() -> None:
     v1 = CustomTuple(1, -2, 3, -4)
     assert v1 / 2 == CustomTuple(0.5, -1, 1.5, -2)
+
+def test_magnitude() -> None:
+    v1 = CustomTuple.vector(0, 1, 0)
+    v2 = CustomTuple.vector(0, 0, 1)
+    v3 = CustomTuple.vector(1, 2, 3)
+    v4 = CustomTuple.vector(-1, -2, -3)
+    p1 = CustomTuple.point(1, 2, 3)
+    t1 = CustomTuple(4, 5, 6, 7)
+
+    assert compare_float(v1.magnitude(), 1.0)
+    assert compare_float(v2.magnitude(), 1.0)
+    assert compare_float(v3.magnitude(), sqrt(14))
+    assert compare_float(v4.magnitude(), sqrt(14))
+
+    with pytest.raises(ValueError) as exc1:
+        p1.magnitude()
+    assert str(exc1.value) == "Can only calculate magnitude for vectors (w == 0)."
+
+    with pytest.raises(ValueError) as exc2:
+        t1.magnitude()
+    assert str(exc2.value) == "Can only calculate magnitude for vectors (w == 0)."
+
+
+def test_normalization() -> None:
+    v1 = CustomTuple.vector(4, 0, 0)
+    v2 = CustomTuple.vector(1, 2, 3)
+    v3 = CustomTuple.vector(1, 2, 3)
+    assert v1.normalize() == CustomTuple.vector(1, 0, 0)
+    assert v2.normalize() == CustomTuple.vector(0.2672612, 0.5345224, 0.8017837)
+    assert v3.normalize().magnitude() == 1
+
+    p1 = CustomTuple.point(1, 2, 3)
+    t1 = CustomTuple(4, 5, 6, 7)
+
+    with pytest.raises(ValueError) as exc1:
+        p1.normalize()
+    assert str(exc1.value) == "Can only normalize vectors (w == 0)."
+
+    with pytest.raises(ValueError) as exc2:
+        t1.normalize()
+    assert str(exc2.value) == "Can only normalize vectors (w == 0)."

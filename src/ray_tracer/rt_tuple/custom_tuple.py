@@ -1,3 +1,5 @@
+from math import sqrt
+
 from .utils import compare_float
 
 
@@ -84,3 +86,20 @@ class CustomTuple:
         self.w /= scalar
 
         return self
+
+    def magnitude(self) -> float:
+        """Calculate magnitude of the vector."""
+        if compare_float(self.w, 0.0):
+            return sqrt(self.x**2 + self.y**2 + self.z**2 + self.w**2)
+        raise ValueError("Can only calculate magnitude for vectors (w == 0).")
+
+    def normalize(self) -> "CustomTuple":
+        """Normalize the vector."""
+        if compare_float(self.w, 0.0):
+            mag = self.magnitude()
+            self.x /= mag
+            self.y /= mag
+            self.z /= mag
+            self.w /= mag
+            return self
+        raise ValueError("Can only normalize vectors (w == 0).")
