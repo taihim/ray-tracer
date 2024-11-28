@@ -47,7 +47,7 @@ class CustomTuple:
     def __add__(self, t2: "CustomTuple") -> "CustomTuple":
         """Define addition behaviour for CustomTuple."""
         if not isinstance(t2, CustomTuple):
-            raise TypeError("Can only add CustomTuples to a CustomTuple.")
+            raise TypeError(f"Unsupported operand of type {type(t2)}. Can only add CustomTuples to a CustomTuple.")
 
         if compare_float(self.w, 1.0) and compare_float(t2.w, 1.0):
             raise ValueError("Cannot add two points.")
@@ -57,7 +57,9 @@ class CustomTuple:
     def __sub__(self, t2: "CustomTuple") -> "CustomTuple":
         """Define subtraction behaviour for CustomTuple."""
         if not isinstance(t2, CustomTuple):
-            raise TypeError("Can only subtract CustomTuples from a CustomTuple.")
+            raise TypeError(
+                f"Unsupported operand of type {type(t2)}. Can only subtract CustomTuples from a CustomTuple."
+            )
 
         if compare_float(self.w, 0.0) and compare_float(t2.w, 1.0):
             raise ValueError("Cannot subtract a point from a vector.")

@@ -38,7 +38,7 @@ def test_addition() -> None:
 
     with pytest.raises(TypeError) as exc2:
         p2 + 1
-    assert str(exc2.value) == "Can only add CustomTuples to a CustomTuple."
+    assert str(exc2.value) == f"Unsupported operand of type {int}. Can only add CustomTuples to a CustomTuple."
 
 
 def test_subtraction() -> None:
@@ -57,7 +57,7 @@ def test_subtraction() -> None:
 
     with pytest.raises(TypeError) as exc2:
         p2 - 1
-    assert str(exc2.value) == "Can only subtract CustomTuples from a CustomTuple."
+    assert str(exc2.value) == f"Unsupported operand of type {int}. Can only subtract CustomTuples from a CustomTuple."
 
 
 def test_equality() -> None:
