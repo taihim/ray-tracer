@@ -1,13 +1,10 @@
-from src.ray_tracer.utils import compare_float
+from .utils import compare_float
 
 
 class CustomTuple:
     """A custom tuple implementation for a ray tracer."""
 
     def __init__(self, x: float = 0.0, y: float = 0.0, z: float = 0.0, w: float = 0.0) -> None:
-        if w not in (0.0, 1.0):
-            raise TypeError("CustomTuple only supports w wiht a value of 1 or 0.")
-
         self.x = float(x)
         self.y = float(y)
         self.z = float(z)
@@ -66,10 +63,24 @@ class CustomTuple:
 
         return CustomTuple(self.x - t2.x, self.y - t2.y, self.z - t2.z, self.w - t2.w)
 
+    def __neg__(self) -> "CustomTuple":
+        """Define negation behaviour for a vector."""
+        return CustomTuple.vector(-self.x, -self.y, -self.z)
 
-if __name__ == "__main__":
-    t1 = CustomTuple.vector(1.2, 2.2, 3.2)
-    t2 = CustomTuple.point(0, 2, 3)
+    def __mul__(self, scalar: float) -> "CustomTuple":
+        """Define scalar multiplication."""
+        self.x *= scalar
+        self.y *= scalar
+        self.z *= scalar
+        self.w *= scalar
 
-    print(t1 + t2)
-    print(t2 - t1)
+        return self
+
+    def __truediv__(self, scalar: float) -> "CustomTuple":
+        """Define scalar division."""
+        self.x /= scalar
+        self.y /= scalar
+        self.z /= scalar
+        self.w /= scalar
+
+        return self

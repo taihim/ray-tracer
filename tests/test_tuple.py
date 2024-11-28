@@ -1,7 +1,6 @@
 import pytest
 
-from src.ray_tracer.custom_tuple import CustomTuple
-from src.ray_tracer.utils import compare_float
+from src.ray_tracer.rt_tuple import CustomTuple, compare_float
 
 
 def test_point() -> None:
@@ -74,3 +73,22 @@ def test_equality() -> None:
     with pytest.raises(TypeError) as exc:
         p2 == "test_str"
     assert str(exc.value) == "Can only compare CustomTuples to a CustomTuple."
+
+
+def test_negation() -> None:
+    v1 = CustomTuple.vector(1, -2, 3)
+
+    assert -v1 == CustomTuple(-1, 2, -3)
+
+
+def test_multiplication() -> None:
+    v1 = CustomTuple(1, -2, 3, -4)
+    assert v1 * 3.5 == CustomTuple(3.5, -7, 10.5, -14)
+
+    v2 = CustomTuple(1, -2, 3, -4)
+    assert v2 * 0.5 == CustomTuple(0.5, -1, 1.5, -2)
+
+
+def test_divison() -> None:
+    v1 = CustomTuple(1, -2, 3, -4)
+    assert v1 / 2 == CustomTuple(0.5, -1, 1.5, -2)

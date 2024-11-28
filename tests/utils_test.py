@@ -1,9 +1,9 @@
 import pytest
 
-from src.ray_tracer.utils import compare_float
+from src.ray_tracer.rt_tuple import compare_float
 
 
-def test_compare_float():
+def test_compare_float() -> None:
 
     assert(compare_float(0, 0))
     assert(compare_float(1, 1.0))
@@ -16,9 +16,9 @@ def test_compare_float():
 
     with pytest.raises(TypeError) as exc:
         compare_float(1, "2")
-    assert(str(exc.value) == "This function only supports floating point numbers.")
+    assert str(exc.value) == "This function only supports integers and floating point numbers."
 
     with pytest.raises(TypeError) as exc2:
         compare_float("1", 2)
-    assert(str(exc2.value) == "This function only supports floating point numbers.")
+    assert str(exc2.value) == "This function only supports integers and floating point numbers."
 
