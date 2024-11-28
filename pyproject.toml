@@ -11,15 +11,11 @@ readme = "README.md"
 license = {text = "MIT"}
 
 
-[tool.pdm]
-distribution = false
-
-[tool.pdm.scripts]
-mypy = "mypy ."
-
 [dependency-groups]
-development = [
+dev = [
+    "pytest>=8.3.3",
     "mypy>=1.13.0",
+    "pytest-coverage>=0.0",
 ]
 
 [tool.ruff]
@@ -44,6 +40,39 @@ lint.ignore = [
     "ISC001", # Conflicts with formatter
 ]
 
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.*" = [
+    "A",
+    "ANN",
+    "ARG",
+    "B",
+    "BLE",
+    "C901",
+    "D",
+    "DTZ",
+    "EM",
+    "FBT",
+    "G",
+    "INP",
+    "N",
+    "PGH",
+    "PIE",
+    "PLR",
+    "PLW",
+    "PT006",
+    "PT007",
+    "PT011",
+    "PT019",
+    "PYI",
+    "RSE",
+    "S",
+    "S101",
+    "SIM",
+    "SLF",
+    "TCH",
+    "TRY",
+]
+
 [tool.ruff.format]
 docstring-code-format = true
 docstring-code-line-length = 120
@@ -65,3 +94,10 @@ disable_error_code = 'import-untyped'
 implicit_reexport = false
 show_error_codes = true
 strict = true
+
+[tool.pdm]
+distribution = false
+
+[tool.pdm.scripts]
+mypy = "mypy ."
+
