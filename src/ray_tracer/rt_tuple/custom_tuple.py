@@ -87,6 +87,7 @@ class CustomTuple:
 
         return self
 
+    # todo: find a better exception than ValueError
     def magnitude(self) -> float:
         """Calculate magnitude of the vector."""
         if compare_float(self.w, 0.0):
@@ -103,3 +104,9 @@ class CustomTuple:
             self.w /= mag
             return self
         raise ValueError("Can only normalize vectors (w == 0).")
+
+    def dot(self, v2: "CustomTuple") -> float:
+        """Compute dot product of two vectors."""
+        if compare_float(self.w, 0.0) and compare_float(v2.w, 0.0):
+            return (self.x * v2.x) + (self.y * v2.y) + (self.z * v2.z) + (self.w * v2.w)
+        raise ValueError("Can only compute dot product for vectors.")

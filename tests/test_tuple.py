@@ -135,3 +135,15 @@ def test_normalization() -> None:
     with pytest.raises(ValueError) as exc2:
         t1.normalize()
     assert str(exc2.value) == "Can only normalize vectors (w == 0)."
+
+def test_dot_product() -> None:
+    v1 = CustomTuple.vector(1, 2, 3)
+    v2 = CustomTuple.vector(2, 3, 4)
+    p1 = CustomTuple.point(4, 0, 0)
+    t1 = CustomTuple(4, 0, 0, 1)
+
+    assert v1.dot(v2) == 20
+
+    with pytest.raises(ValueError) as exc1:
+        p1.dot(t1)
+    assert str(exc1.value) == "Can only compute dot product for vectors."
