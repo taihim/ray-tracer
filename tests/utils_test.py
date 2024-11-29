@@ -15,10 +15,10 @@ def test_compare_float() -> None:
     assert(compare_float(-1.1, 1.1) is False)
 
     with pytest.raises(TypeError) as exc:
-        compare_float(1, "2")
+        compare_float(1, "2")  # type: ignore[arg-type]
     assert str(exc.value) == "This function only supports integers and floating point numbers."
 
     with pytest.raises(TypeError) as exc2:
-        compare_float("1", 2)
+        compare_float("1", 2)  # type: ignore[arg-type]
     assert str(exc2.value) == "This function only supports integers and floating point numbers."
 

@@ -38,7 +38,7 @@ def test_addition() -> None:
     assert str(exc.value) == "Cannot add two points."
 
     with pytest.raises(TypeError) as exc2:
-        p2 + 1
+        p2 + 1  # type: ignore[operator]
     assert str(exc2.value) == f"Unsupported operand of type {int}. Can only add CustomTuples to a CustomTuple."
 
 
@@ -57,7 +57,7 @@ def test_subtraction() -> None:
     assert str(exc.value) == "Cannot subtract a point from a vector."
 
     with pytest.raises(TypeError) as exc2:
-        p2 - 1
+        p2 - 1  # type: ignore[operator]
     assert str(exc2.value) == f"Unsupported operand of type {int}. Can only subtract CustomTuples from a CustomTuple."
 
 
