@@ -1,6 +1,6 @@
 import pytest
 
-from src.ray_tracer.rt_tuple import compare_float
+from src.ray_tracer import compare_float
 
 
 def test_compare_float() -> None:
