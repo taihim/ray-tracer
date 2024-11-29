@@ -3,6 +3,7 @@ from math import sqrt
 from .utils import compare_float
 
 
+# todo: refactor customTuple to an interface and make Vector, point and color inherit
 class CustomTuple:
     """A custom tuple implementation for a ray tracer."""
 
