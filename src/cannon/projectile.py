@@ -1,4 +1,4 @@
-from ray_tracer import CustomTuple
+from src.ray_tracer import CustomTuple
 
 
 class Projectile:
