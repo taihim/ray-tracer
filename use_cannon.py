@@ -24,7 +24,7 @@ from src.ray_tracer import Canvas
 # # print(c4 == ColorTuple(3, 6, 9))
 # # print(c1.hadamard(c2))
 
-cv = Canvas(256, 256, (0.5, 0.3, 0.7))
+cv = Canvas(1920, 1080, (0.5, 0.3, 0.7))
 
 # cv[0][0] = ColorTuple(1.5, 0, 0)
 # cv[1][2] = ColorTuple(0, 0.5, 0)

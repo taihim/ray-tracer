@@ -39,6 +39,7 @@ class Canvas:
         else:
             raise TypeError("Index must be a tuple of two integers (row, col).")
 
+    # todo: parallelize this operation to speed it up
     def save(self, path: str = "./canvas.ppm") -> str:
         """Saves the pixel array to a PPM file.
 
@@ -71,3 +72,38 @@ class Canvas:
             f.write(header + data)
 
         return header + data
+
+# some options for parallelization
+"""import concurrent.futures
+
+# Example operation to apply on each subarray
+def process_subarray(subarray):
+    # Perform your operation here
+    return [x * 2 for x in subarray]  # Example: Multiply each element by 2
+
+def parallel_process(arrays):
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        result = list(executor.map(process_subarray, arrays))
+    return result
+
+# Example usage
+arrays = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+result = parallel_process(arrays)
+print(result)
+"""
+
+
+"""import multiprocessing
+
+def process_subarray(subarray):
+    return [x * 2 for x in subarray]  # Example operation
+
+def parallel_process(arrays):
+    with multiprocessing.Pool() as pool:
+        result = pool.map(process_subarray, arrays)
+    return result
+
+arrays = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+result = parallel_process(arrays)
+print(result)
+"""
