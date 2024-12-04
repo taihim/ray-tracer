@@ -40,12 +40,8 @@ class Canvas:
             raise TypeError("Index must be a tuple of two integers (row, col).")
 
     # todo: parallelize this operation to speed it up
-    def save(self, path: str = "./canvas.ppm") -> str:
-        """Saves the pixel array to a PPM file.
-
-        Args:
-            path: the path to save the file to.
-        """
+    def canvas_to_ppm(self) -> str:
+        """Converts a canvas object to a string that can be saved to a file."""
         min_val = 0
         max_val = 255
         max_chars_per_line = 70
@@ -68,10 +64,18 @@ class Canvas:
 
             data += col_str
 
-        with Path(path).open("w") as f:
-            f.write(header + data)
-
         return header + data
+
+    def save(self, data: str, path: str = "./canvas.ppm") -> None:
+        """Saves the pixel array to a PPM file.
+
+        Args:
+            data: the canvas data in string form.
+            path: the path to save the file to.
+        """
+        with Path(path).open("w") as f:
+            f.write(data)
+
 
 # some options for parallelization
 """import concurrent.futures

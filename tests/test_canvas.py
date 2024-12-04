@@ -20,3 +20,27 @@ def test_canvas_write() -> None:
     cv.pixels[2][3] = new_color
 
     assert cv.pixels[2][3] == ColorTuple(1, 0, 0)
+
+
+def test_canvas_to_ppm() -> None:
+    cv = Canvas(5, 7, (0.5, 0.3, 0.7))
+
+    output_str = cv.canvas_to_ppm()
+
+    output_split = output_str.split("\n")
+
+    assert output_split[0] == "P3"
+    assert output_split[1] == "7 5"
+    assert output_split[2] == "255"
+    assert output_split[3] == "127 76 178 127 76 178 127 76 178 127 76 178 127 76 178 127 76 178 127"
+    assert output_split[4] == "76 178"
+    assert output_split[5] == "127 76 178 127 76 178 127 76 178 127 76 178 127 76 178 127 76 178 127"
+    assert output_split[6] == "76 178"
+    assert output_split[7] == "127 76 178 127 76 178 127 76 178 127 76 178 127 76 178 127 76 178 127"
+    assert output_split[8] == "76 178"
+    assert output_split[9] == "127 76 178 127 76 178 127 76 178 127 76 178 127 76 178 127 76 178 127"
+    assert output_split[10] == "76 178"
+    assert output_split[11] == "127 76 178 127 76 178 127 76 178 127 76 178 127 76 178 127 76 178 127"
+    assert output_split[12] == "76 178"
+
+    assert output_str[-1] == "\n"

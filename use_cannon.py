@@ -24,12 +24,16 @@ from src.ray_tracer import Canvas
 # # print(c4 == ColorTuple(3, 6, 9))
 # # print(c1.hadamard(c2))
 
-cv = Canvas(1920, 1080, (0.5, 0.3, 0.7))
+cv = Canvas(5, 7, (0.5, 0.3, 0.7))
 
 # cv[0][0] = ColorTuple(1.5, 0, 0)
 # cv[1][2] = ColorTuple(0, 0.5, 0)
 # cv[2][4] = ColorTuple(-0.5, 0, 1)
-cv.save()
+data = cv.canvas_to_ppm()
+data_split = data.split("\n")
+print(data)
+print(data_)
+# cv.save(data=data)
 
 # for i in range(cv.height):
 #     for j in range(cv.width):
