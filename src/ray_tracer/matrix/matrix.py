@@ -1,6 +1,3 @@
-from src.ray_tracer.utils import compare_float
-
-
 class RTMatrix:
     """Class representing matrices used in the Raytracer."""
 
@@ -22,7 +19,9 @@ class RTMatrix:
         """Access a row or specific element in the matrix."""
         if isinstance(index, int):
             return self.data[index]
-
+        if isinstance(index, tuple) and len(index) == 2:
+            row, col = index
+            return self.data[row][col]
         raise TypeError("Index should be an int or a tuple of two integers.")
 
     def __setitem__(self, index: int, value: list[float]) -> None:
@@ -34,12 +33,3 @@ class RTMatrix:
                 raise ValueError(f"Expected {self.cols} columns, got {len(value)}.")
         else:
             raise TypeError(f"Expected index of type Int, got {type(index)}.")
-
-
-compare_float(1.1, 2.3)
-mtrx = [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]
-m1 = RTMatrix(3, 3)
-m2 = RTMatrix(matrix=mtrx)
-m1[2] = [0.67, 1, 0]
-print(m1.data)
-print(m2.data)
