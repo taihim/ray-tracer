@@ -1,3 +1,6 @@
+from typing import overload
+
+
 class RTMatrix:
     """Class representing matrices used in the Raytracer."""
 
@@ -14,6 +17,12 @@ class RTMatrix:
     def __repr__(self) -> str:
         """String representation of an RTMatrix object."""
         return f"RTMatrix Object(rows={self.rows}, columns={self.cols})"
+
+    @overload
+    def __getitem__(self, index: int) -> list[float]: ...
+
+    @overload
+    def __getitem__(self, index: tuple[int, int]) -> float: ...
 
     def __getitem__(self, index: int | tuple[int, int]) -> list[float] | float:
         """Access a row or specific element in the matrix."""
