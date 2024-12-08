@@ -163,3 +163,4 @@ cython_debug/
 
 *.ppm
 images/
+videos/
