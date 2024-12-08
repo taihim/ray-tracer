@@ -1,7 +1,7 @@
 from typing import Any
 
+from ..utils import compare_float
 from .custom_tuple import CustomTuple
-from .utils import compare_float
 
 
 class ColorTuple(CustomTuple):

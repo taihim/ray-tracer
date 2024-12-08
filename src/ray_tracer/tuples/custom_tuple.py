@@ -1,6 +1,6 @@
 from math import sqrt
 
-from .utils import compare_float
+from ..utils import compare_float
 
 
 # todo: refactor customTuple to an interface and make Vector, point and color inherit
