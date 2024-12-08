@@ -2,7 +2,8 @@ from math import sqrt
 
 import pytest
 
-from src.ray_tracer import CustomTuple, compare_float
+from src.ray_tracer import CustomTuple
+from src.ray_tracer.utils import compare_float
 
 
 def test_point() -> None:

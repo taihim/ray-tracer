@@ -1,4 +1,5 @@
-from src.ray_tracer import ColorTuple, compare_float
+from src.ray_tracer import ColorTuple
+from src.ray_tracer.utils import compare_float
 
 
 def test_color() -> None:

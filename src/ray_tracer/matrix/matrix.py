@@ -1,14 +1,18 @@
-from ..utils import compare_float
+from src.ray_tracer.utils import compare_float
 
 
 class RTMatrix:
     """Class representing matrices used in the Raytracer."""
 
-    def __init__(self, rows: int = 1, cols: int = 1) -> None:
-        self.rows = rows
-        self.cols = cols
-
-        self.data: list[list[float]] = [[0.0] * cols for _ in range(rows)]
+    def __init__(self, rows: int = 1, cols: int = 1, matrix: list[list[float]] | None = None) -> None:
+        if matrix:
+            self.rows = len(matrix)
+            self.cols = len(matrix[0])
+            self.data = matrix
+        else:
+            self.rows = rows
+            self.cols = cols
+            self.data = [[0.0] * cols for _ in range(rows)]
 
     def __repr__(self) -> str:
         """String representation of an RTMatrix object."""
@@ -33,6 +37,9 @@ class RTMatrix:
 
 
 compare_float(1.1, 2.3)
+mtrx = [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]]
 m1 = RTMatrix(3, 3)
+m2 = RTMatrix(matrix=mtrx)
 m1[2] = [0.67, 1, 0]
 print(m1.data)
+print(m2.data)

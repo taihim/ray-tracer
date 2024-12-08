@@ -1,6 +1,7 @@
 from typing import Any
 
-from ..utils import compare_float
+from src.ray_tracer.utils import compare_float
+
 from .custom_tuple import CustomTuple
 
 
