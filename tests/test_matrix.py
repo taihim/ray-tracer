@@ -1,4 +1,5 @@
 from src.ray_tracer.matrix import RTMatrix
+from src.ray_tracer.tuples import CustomTuple
 
 
 def test_matrix_init_1x1() -> None:
@@ -89,3 +90,21 @@ def test_matrices_unequal_4x4() -> None:
     m2 = RTMatrix(matrix=[[2, 3, 4, 5], [6, 7, 8, 9], [8, 7, 6, 5], [4, 3, 2, 1]])
 
     assert m1 != m2
+
+def test_matrix_multiply_4x4() -> None:
+    m1 = RTMatrix(matrix=[[1, 2, 3, 4], [5, 6, 7, 8], [9, 8, 7, 6], [5, 4, 3, 2]])
+    m2 = RTMatrix(matrix=[[-2, 1, 2, 3], [3, 2, 1, -1], [4, 3, 6, 5], [1, 2, 7, 8]])
+
+    assert m1 * m2 == RTMatrix(matrix=[[20, 22, 50, 48], [44, 54, 114, 108], [40, 58, 110, 102], [16, 26, 46, 42]])
+
+
+def test_matrix_multiply_4x1() -> None:
+    m1 = RTMatrix(matrix=[[1, 2, 3, 4], [2, 4, 4, 2], [8, 6, 4, 1], [0, 0, 0, 1]])
+    t1 = CustomTuple(1, 2, 3, 1)
+
+    assert isinstance(m1 * t1, CustomTuple)
+    assert m1 * t1 == CustomTuple(18.0, 24.0, 33.0, 1.0)
+
+
+if __name__ == "__main__":
+    test_matrix_multiply_4x1()

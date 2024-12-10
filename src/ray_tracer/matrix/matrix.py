@@ -1,5 +1,6 @@
-from typing import overload
+from typing import Optional, Union, overload
 
+from src.ray_tracer.tuples import CustomTuple
 from src.ray_tracer.utils import compare_float
 
 
@@ -61,3 +62,35 @@ class RTMatrix:
                     return False
 
         return True
+
+    # for simplicity, multiplcation is limited to matrices with 4 rows.
+    def __mul__(self, mat: Union["RTMatrix", CustomTuple]) -> Union["RTMatrix", CustomTuple]:
+        """Multiplies two matrices together."""
+        if len(self.data) != 4:
+            raise NotImplementedError("Multiplication for all dimensions not implemented yet.")
+
+        m2 = RTMatrix(matrix=[[mat.x], [mat.y], [mat.z], [mat.w]]) if isinstance(mat, CustomTuple) else mat
+
+        output_dims = (m2.rows, m2.cols)
+        output_matrix = RTMatrix(output_dims[0], output_dims[1])
+        for row_idx in range(output_dims[0]):
+            for col_idx in range(output_dims[1]):
+                output_matrix[row_idx][col_idx] = (
+                    self.data[row_idx][0] * m2[0][col_idx]
+                    + self.data[row_idx][1] * m2[1][col_idx]
+                    + self.data[row_idx][2] * m2[2][col_idx]
+                    + self.data[row_idx][3] * m2[3][col_idx]
+                )
+        return (
+            output_matrix
+            if not isinstance(mat, CustomTuple)
+            else CustomTuple(x=output_matrix[0][0], y=output_matrix[1][0], z=output_matrix[2][0], w=output_matrix[3][0])
+        )
+
+    def transpose(self, *, inplace: bool) -> Optional["RTMatrix"]:
+        """Transposes a matrix. Inplace modifies the existing matrix."""
+        if inplace:
+            self.data = [[0.0]]
+        else:
+            return RTMatrix(matrix=[[0.0]])
+        return None
