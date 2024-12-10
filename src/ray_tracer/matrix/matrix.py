@@ -64,6 +64,16 @@ class RTMatrix:
         return True
 
     # for simplicity, multiplcation is limited to matrices with 4 rows.
+    # todo: update algorithm to support more dimensions using the following algo:
+    # Input: matrices A and B
+    # Let C be a new matrix of the appropriate size
+    # For i from 1 to n:
+    # For j from 1 to p:
+    # Let sum = 0
+    # For k from 1 to m:
+    # Set sum ← sum + Aik × Bkj
+    # Set Cij ← sum
+    # Return C
     def __mul__(self, mat: Union["RTMatrix", CustomTuple]) -> Union["RTMatrix", CustomTuple]:
         """Multiplies two matrices together."""
         if len(self.data) != 4:
