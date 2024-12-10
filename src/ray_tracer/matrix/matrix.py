@@ -71,7 +71,7 @@ class RTMatrix:
     # For j from 1 to p:
     # Let sum = 0
     # For k from 1 to m:
-    # Set sum ← sum + Aik × Bkj
+    # Set sum ← sum + Aik * Bkj
     # Set Cij ← sum
     # Return C
     def __mul__(self, mat: Union["RTMatrix", CustomTuple]) -> Union["RTMatrix", CustomTuple]:
