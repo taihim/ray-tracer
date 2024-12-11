@@ -105,6 +105,41 @@ def test_matrix_multiply_4x1() -> None:
     assert isinstance(m1 * t1, CustomTuple)
     assert m1 * t1 == CustomTuple(18.0, 24.0, 33.0, 1.0)
 
+def test_matrix_identity_1x1() -> None:
+    i1 = RTMatrix.identity(1, 1)
+    assert i1 == RTMatrix(matrix=[[1]])
+
+
+def test_matrix_identity_2x2() -> None:
+    i1 = RTMatrix.identity(2, 2)
+    assert i1 == RTMatrix(matrix=[[1, 0], [0, 1]])
+
+
+def test_matrix_identity_3x3() -> None:
+    i1 = RTMatrix.identity(3, 3)
+    assert i1 == RTMatrix(matrix=[[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+
+
+def test_matrix_identity_4x4() -> None:
+    i1 = RTMatrix.identity()
+    i2 = RTMatrix.identity(4, 4)
+    identity = RTMatrix(matrix=[[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]])
+    assert i1 == identity
+    assert i2 == identity
+
+
+def test_matrix_identity_multiplication() -> None:
+    i1 = RTMatrix.identity()
+    m1 = RTMatrix(matrix=[[0, 1, 2, 4], [1, 2, 4, 8], [2, 4, 8, 16], [4, 8, 16, 32]])
+
+    assert m1 * i1 == m1
+
+
+def test_tuple_identity_multiplication() -> None:
+    i1 = RTMatrix.identity()
+    t1 = CustomTuple(1, 2, 3, 4)
+
+    assert i1 * t1 == t1
 
 if __name__ == "__main__":
-    test_matrix_multiply_4x1()
+    test_matrix_identity_4x4()

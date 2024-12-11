@@ -7,7 +7,7 @@ from src.ray_tracer.utils import compare_float
 class RTMatrix:
     """Class representing matrices used in the Raytracer."""
 
-    def __init__(self, rows: int = 1, cols: int = 1, matrix: list[list[float]] | None = None) -> None:
+    def __init__(self, rows: int = 1, cols: int = 1, *, matrix: list[list[float]] | None = None) -> None:
         if matrix:
             if not isinstance(matrix, list) or not isinstance(matrix[0], list):
                 raise TypeError(f"Expected both rows and cols to be lists, got {(type(matrix), type(matrix[0]))}.")
@@ -104,3 +104,12 @@ class RTMatrix:
         else:
             return RTMatrix(matrix=[[0.0]])
         return None
+
+    @staticmethod
+    def identity(rows: int = 4, cols: int = 4) -> "RTMatrix":
+        """Returns an identity matrix of the given dimensions."""
+        m1 = RTMatrix(rows, cols)
+        for i in range(rows):
+            m1[i][i] = 1.0
+
+        return m1
