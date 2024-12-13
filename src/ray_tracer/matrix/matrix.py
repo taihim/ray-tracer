@@ -49,7 +49,7 @@ class RTMatrix:
             raise TypeError(f"Expected index of type Int, got {type(index)}.")
 
     def __eq__(self, m2: object) -> bool:
-        """Compares two matrices."""
+        """Compare two matrices."""
         if not isinstance(m2, RTMatrix):
             raise NotImplementedError
 
