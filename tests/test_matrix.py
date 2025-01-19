@@ -140,6 +140,3 @@ def test_tuple_identity_multiplication() -> None:
     t1 = CustomTuple(1, 2, 3, 4)
 
     assert i1 * t1 == t1
-
-if __name__ == "__main__":
-    test_matrix_identity_4x4()
