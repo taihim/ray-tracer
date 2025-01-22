@@ -97,7 +97,16 @@ class RTMatrix:
             else CustomTuple(x=output_matrix[0][0], y=output_matrix[1][0], z=output_matrix[2][0], w=output_matrix[3][0])
         )
 
-    def transpose(self, *, inplace: bool) -> Optional["RTMatrix"]:
+    @staticmethod
+    def identity(rows: int = 4, cols: int = 4) -> "RTMatrix":
+        """Returns an identity matrix of the given dimensions."""
+        matrix = RTMatrix(rows, cols)
+        for i in range(rows):
+            matrix[i][i] = 1.0
+
+        return matrix
+
+    def transpose(self, inplace: bool) -> Optional["RTMatrix"]:  # noqa: FBT001
         """Transposes a matrix. Inplace modifies the existing matrix."""
         if inplace:
             self.data = [[0.0]]
@@ -105,11 +114,5 @@ class RTMatrix:
             return RTMatrix(matrix=[[0.0]])
         return None
 
-    @staticmethod
-    def identity(rows: int = 4, cols: int = 4) -> "RTMatrix":
-        """Returns an identity matrix of the given dimensions."""
-        m1 = RTMatrix(rows, cols)
-        for i in range(rows):
-            m1[i][i] = 1.0
-
-        return m1
+    def inverse(self) -> None:
+        """Calculates inverse of the matrix."""
