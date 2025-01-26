@@ -175,5 +175,16 @@ class RTMatrix:
         """Check whether the matrix is invertible."""
         return self.determinant() != 0
 
-    def inverse(self) -> None:
-        """Calculate the inverse of the matrix."""
+    def inverse(self) -> "RTMatrix":
+        """Calculate and return the inverse of the matrix."""
+        if not self.invertable():
+            raise ValueError("Matrix is not invertable.")
+
+        inverse_matrix = RTMatrix(rows=self.rows, cols=self.cols)
+
+        for row in range(self.rows):
+            for col in range(self.cols):
+                c = self.cofactor(row, col)
+
+                inverse_matrix[col][row] = c / self.determinant()
+        return inverse_matrix

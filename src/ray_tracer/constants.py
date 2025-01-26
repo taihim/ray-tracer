@@ -1,4 +1,4 @@
 """Constants for the ray tracer."""
 from typing import Final
 
-EPSILON: Final[float] = 0.0000001
+EPSILON: Final[float] = 0.00001
