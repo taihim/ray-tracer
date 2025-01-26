@@ -1,0 +1,77 @@
+name: DeepSource, Mypy, and Pytest
+
+on:
+  push:
+    branches:
+      - main  # Trigger on commits to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull requests targeting the main branch
+
+jobs:
+  deepsource:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up PDM and Python (version 3.12)
+        uses: pdm-project/setup-pdm@v4
+        with:
+          python-version: '3.12'
+          cache: true
+          cache-dependency-path: |
+            ./pdm.lock
+        
+      - name: Install dependencies
+        run: pdm install
+
+      - name: Install DeepSource CLI
+        run: |
+          curl -sSL https://deepsource.io/cli/install | bash
+          sudo mv deepsource /usr/local/bin
+
+      - name: Run DeepSource
+        run: deepsource analyze
+
+  mypy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up PDM and Python (version 3.12)
+        uses: pdm-project/setup-pdm@v4
+        with:
+          python-version: '3.12'
+          cache: true
+          cache-dependency-path: |
+            ./pdm.lock
+        
+      - name: Install dependencies
+        run: pdm install
+
+      - name: Run Mypy (Type Checking)
+        run: |
+          mypy .  # Run mypy on your project directory
+
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up PDM and Python (version 3.12)
+        uses: pdm-project/setup-pdm@v4
+        with:
+          python-version: '3.12'
+          cache: true
+          cache-dependency-path: |
+            ./pdm.lock
+        
+      - name: Install dependencies
+        run: pdm install
+
+      - name: Run Pytest (Tests)
+        run: |
+          pytest --disable-warnings -q

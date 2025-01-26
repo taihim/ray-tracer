@@ -130,7 +130,7 @@ class RTMatrix:
         if self.rows == 2:
             return (self.data[0][0] * self.data[1][1]) - (self.data[0][1] * self.data[1][0])
 
-        det = 0
+        det = 0.0
         for col in range(self.cols):
             det += self.data[0][col] * self.cofactor(0, col)
         return det
