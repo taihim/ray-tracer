@@ -172,3 +172,8 @@ def test_submatrix_4x4() -> None:
     s1 = m1.submatrix(2, 1)
 
     assert s1 == RTMatrix(matrix=[[-6, 1, 6], [-8, 8, 6], [-7, -1, 1]])
+
+def test_minor_3x3() -> None:
+    m1 = RTMatrix(matrix=[[3, 5, 0], [2, -1, -7], [6, -1, 5]])
+
+    assert m1.minor(1, 0) == 25

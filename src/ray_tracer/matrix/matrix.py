@@ -143,5 +143,12 @@ class RTMatrix:
 
         return RTMatrix(matrix=new_matrix)
 
+    # i.e. determinant of submatrix at (row,col)
+    def minor(self, row, col) -> int:
+        """Calculates the minor for an element at (row, col) in the 2x2 submatrix of the 3x3 matrix."""
+        if self.rows != 3 or self.cols != 3:
+            raise ValueError("Minor calculation only implemented for 3x3 matrices.")
+        return self.submatrix(row, col).determinant()
+
     def inverse(self) -> None:
         """Calculates inverse of the matrix."""
