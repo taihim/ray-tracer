@@ -262,3 +262,10 @@ def test_inverse_3() -> None:
             [0.17778, 0.06667, -0.26667, 0.33333],
         ]
     )
+
+def test_inverse_multiplication() -> None:
+    m1 = RTMatrix(matrix=[[3, -9, 7, 3], [3, -8, 2, -9], [-4, 4, 4, 1], [-6, 5, -1, 1]])
+    m2 = RTMatrix(matrix=[[8, 2, 2, 2], [3, -1, 7, 0], [7, 0, 5, 4], [6, -2, 0, 5]])
+
+    m3 = m1 * m2
+    assert m3 * m2.inverse() == m1
