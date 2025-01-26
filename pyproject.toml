@@ -106,4 +106,4 @@ distribution = false
 [tool.pdm.scripts]
 mypy = "mypy ."
 test = "pytest ."
-scratchpad = "python -m e2e.scratchpad"
+scratchpad = "python -m scripts.scratchpad"
