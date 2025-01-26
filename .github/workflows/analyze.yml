@@ -28,7 +28,7 @@ jobs:
 
       - name: Run Mypy (Type Checking)
         run: |
-          pdm run mypy .  # Run mypy on your project directory
+          pdm run mypy  # Run mypy on your project directory
 
   pytest:
     runs-on: ubuntu-latest
@@ -61,7 +61,7 @@ jobs:
             curl https://deepsource.io/cli | sh
 
           # From the root directory, run the report coverage command
-            ./bin/deepsource report --analyzer test-coverage --key python --value-file ./path/to/report
+            ./bin/deepsource report --analyzer test-coverage --key python --value-file ./coverage.xml
 
         env:
           DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
