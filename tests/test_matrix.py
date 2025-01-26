@@ -203,3 +203,16 @@ def test_determinant_4x4() -> None:
     assert m1.cofactor(0, 2) == 210
     assert m1.cofactor(0, 3) == 51
     assert m1.determinant() == -4071
+
+def test_invertable() -> None:
+    m1 = RTMatrix(matrix=[[6, 4, 4, 4], [5, 5, 7, 6], [4, -9, 3, -7], [9, 1, 7, -6]])
+
+    assert m1.determinant() == -2120
+    assert m1.invertable() is True
+
+
+def test_noninvertable() -> None:
+    m1 = RTMatrix(matrix=[[-4, 2, -2, -3], [9, 6, 2, 6], [0, -5, 1, -5], [0, 0, 0, 0]])
+
+    assert m1.determinant() == 0
+    assert m1.invertable() is False

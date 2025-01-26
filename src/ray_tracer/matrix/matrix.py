@@ -171,5 +171,9 @@ class RTMatrix:
             return minor
         return -minor
 
+    def invertable(self) -> bool:
+        """Check whether the matrix is invertible."""
+        return self.determinant() != 0
+
     def inverse(self) -> None:
         """Calculate the inverse of the matrix."""
