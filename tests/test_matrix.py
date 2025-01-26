@@ -153,3 +153,8 @@ def test_identity_transpose() -> None:
     i2 = i1.transpose()
 
     assert i1 == i2
+
+def test_determinant_2x2() -> None:
+    m1 = RTMatrix(matrix=[[1, 5], [-3, 2]])
+
+    assert m1.determinant() == 17

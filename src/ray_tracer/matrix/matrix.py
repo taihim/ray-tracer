@@ -118,5 +118,15 @@ class RTMatrix:
 
         return RTMatrix(matrix=transposed)
 
+    # implementing using cofactor expansion atm
+    # LU decomposition better suited for larger matrix sizes O(n^3)
+    def determinant(self) -> int:
+        """Calculates the determinant of a matrix."""
+        if self.rows != self.cols:
+            raise ValueError("Determinant only defined for square matrices.")
+        if self.rows == 2:
+            return (self.data[0][0] * self.data[1][1]) - (self.data[0][1] * self.data[1][0])
+        return -1
+
     def inverse(self) -> None:
         """Calculates inverse of the matrix."""
