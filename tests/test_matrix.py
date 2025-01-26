@@ -159,9 +159,16 @@ def test_determinant_2x2() -> None:
 
     assert m1.determinant() == 17
 
-def test_submatrix() -> None:
+def test_submatrix_3x3() -> None:
     m1 = RTMatrix(matrix=[[1, 5, 0], [-3, 2, 7], [0, 6, -3]])
 
     s1 = m1.submatrix(0, 2)
 
     assert s1 == RTMatrix(matrix=[[-3, 2], [0, 6]])
+
+def test_submatrix_4x4() -> None:
+    m1 = RTMatrix(matrix=[[-6, 1, 1, 6], [-8, 5, 8, 6], [-1, 0, 8, 2], [-7, 1, -1, 1]])
+
+    s1 = m1.submatrix(2, 1)
+
+    assert s1 == RTMatrix(matrix=[[-6, 1, 6], [-8, 8, 6], [-7, -1, 1]])
