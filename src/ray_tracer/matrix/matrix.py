@@ -76,7 +76,7 @@ class RTMatrix:
     # Set Cij ← sum
     # Return C
     def __mul__(self, mat: Union["RTMatrix", CustomTuple]) -> Union["RTMatrix", CustomTuple]:
-        """Multiplies two matrices together."""
+        """Multiply two matrices together."""
         if len(self.data) != 4:
             raise NotImplementedError("Multiplication for all dimensions not implemented yet.")
 
@@ -100,7 +100,7 @@ class RTMatrix:
 
     @staticmethod
     def identity(rows: int = 4, cols: int = 4) -> "RTMatrix":
-        """Returns an identity matrix of the given dimensions."""
+        """Return an identity matrix with the given dimensions."""
         matrix = RTMatrix(rows, cols)
         for i in range(rows):
             matrix[i][i] = 1.0
@@ -108,7 +108,7 @@ class RTMatrix:
         return matrix
 
     def transpose(self, inplace: bool = False) -> Optional["RTMatrix"]:  # noqa: FBT001, FBT002
-        """Transposes a matrix. Inplace modifies the existing matrix."""
+        """Transpose a matrix. Inplace = True modifies the existing matrix."""
         transposed = []
         for i in range(self.cols):
             new_row = [self.data[j][i] for j in range(self.rows)]
@@ -122,15 +122,21 @@ class RTMatrix:
     # implementing using cofactor expansion atm
     # LU decomposition better suited for larger matrix sizes O(n^3)
     def determinant(self) -> float:
-        """Calculates the determinant of a matrix."""
+        """Calculate the determinant of the matrix."""
         if self.rows != self.cols:
             raise ValueError("Determinant only defined for square matrices.")
+        if self.rows > 4:
+            raise ValueError("Only matrices with dimensions upto 4x4 are supported.")
         if self.rows == 2:
             return (self.data[0][0] * self.data[1][1]) - (self.data[0][1] * self.data[1][0])
-        return -1
+
+        det = 0
+        for col in range(self.cols):
+            det += self.data[0][col] * self.cofactor(0, col)
+        return det
 
     def submatrix(self, row: int, col: int) -> "RTMatrix":
-        """Creates and returns a submatrix from the original matrix.
+        """Create and return a submatrix from the original matrix.
 
         Args:
             row: the row to remove from the original matrix
@@ -145,26 +151,25 @@ class RTMatrix:
 
     # i.e. determinant of submatrix at (row,col)
     def minor(self, row: int, col: int) -> float:
-        """Calculates the minor for an element at (row, col) in the 2x2 submatrix of the 3x3 matrix."""
-        if self.rows != 3 or self.cols != 3:
-            raise ValueError("Minor calculation only implemented for 3x3 matrices.")
+        """Calculate the minor for an element at (row, col) in the 2x2 submatrix of the 3x3 matrix."""
+        if self.rows > 4 or self.cols > 4:
+            raise ValueError("Minor calculation only implemented for upto 4x4 matrices.")
         return self.submatrix(row, col).determinant()
 
     # cofactor multiplication rules
     # + - +
     # - + -
     # + - +
-    # i.e. if row + col is odd, multiply by -1
+    # i.e. if row + col is odd, multiply the minor of that element by -1
     def cofactor(self, row: int, col: int) -> float:
-        """Calculates the cofactor for an element at (row, col) in the 2x2 submatrix of the 3x3 matrix."""
-        if self.rows != 3 or self.cols != 3:
-            raise ValueError("Cofactor calculation only implemented for 3x3 matrices.")
+        """Calculate the cofactor for an element at (row, col)."""
+        if self.rows > 4 or self.cols > 4:
+            raise ValueError("Cofactor calculation only implemented for upto 4x4 matrices.")
 
         minor = self.minor(row, col)
-
         if (row + col) % 2 == 0:
             return minor
         return -minor
 
     def inverse(self) -> None:
-        """Calculates inverse of the matrix."""
+        """Calculate the inverse of the matrix."""
