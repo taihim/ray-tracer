@@ -108,9 +108,15 @@ class RTMatrix:
 
     def transpose(self, inplace: bool = False) -> Optional["RTMatrix"]:  # noqa: FBT001, FBT002
         """Transposes a matrix. Inplace modifies the existing matrix."""
+        transposed = []
+        for i in range(self.cols):
+            new_row = [self.data[j][i] for j in range(self.rows)]
+            transposed.append(new_row)
         if inplace:
+            self.data = transposed
             return None
-        return RTMatrix(matrix=self.data)
+
+        return RTMatrix(matrix=transposed)
 
     def inverse(self) -> None:
         """Calculates inverse of the matrix."""

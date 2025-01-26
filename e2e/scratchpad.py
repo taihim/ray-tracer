@@ -2,4 +2,14 @@ from src.ray_tracer import RTMatrix
 
 m1 = RTMatrix(matrix=[[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 
-print(m1)
+"""
+[
+[1 2 3]
+[4 5 6]
+[7 8 9]
+]
+
+iterate thru the list
+"""
+m1.transpose(inplace=True)
+print(m1.data)
