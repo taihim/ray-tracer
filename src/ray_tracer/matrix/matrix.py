@@ -1,3 +1,4 @@
+from copy import deepcopy
 from typing import Optional, Union, overload
 
 from src.ray_tracer.tuples import CustomTuple
@@ -127,6 +128,20 @@ class RTMatrix:
         if self.rows == 2:
             return (self.data[0][0] * self.data[1][1]) - (self.data[0][1] * self.data[1][0])
         return -1
+
+    def submatrix(self, row, col) -> "RTMatrix":
+        """Creates and returns a submatrix from the original matrix.
+
+        Args:
+            row: the row to remove from the original matrix
+            col: the column to remove from the original matrix
+        """
+        new_matrix = deepcopy(self.data)
+        new_matrix.pop(row)
+        for matrix_row in new_matrix:
+            matrix_row.pop(col)
+
+        return RTMatrix(matrix=new_matrix)
 
     def inverse(self) -> None:
         """Calculates inverse of the matrix."""

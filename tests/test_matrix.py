@@ -158,3 +158,10 @@ def test_determinant_2x2() -> None:
     m1 = RTMatrix(matrix=[[1, 5], [-3, 2]])
 
     assert m1.determinant() == 17
+
+def test_submatrix() -> None:
+    m1 = RTMatrix(matrix=[[1, 5, 0], [-3, 2, 7], [0, 6, -3]])
+
+    s1 = m1.submatrix(0, 2)
+
+    assert s1 == RTMatrix(matrix=[[-3, 2], [0, 6]])
