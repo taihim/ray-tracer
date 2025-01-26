@@ -121,7 +121,7 @@ class RTMatrix:
 
     # implementing using cofactor expansion atm
     # LU decomposition better suited for larger matrix sizes O(n^3)
-    def determinant(self) -> int:
+    def determinant(self) -> float:
         """Calculates the determinant of a matrix."""
         if self.rows != self.cols:
             raise ValueError("Determinant only defined for square matrices.")
@@ -129,7 +129,7 @@ class RTMatrix:
             return (self.data[0][0] * self.data[1][1]) - (self.data[0][1] * self.data[1][0])
         return -1
 
-    def submatrix(self, row, col) -> "RTMatrix":
+    def submatrix(self, row: int, col: int) -> "RTMatrix":
         """Creates and returns a submatrix from the original matrix.
 
         Args:
@@ -144,11 +144,27 @@ class RTMatrix:
         return RTMatrix(matrix=new_matrix)
 
     # i.e. determinant of submatrix at (row,col)
-    def minor(self, row, col) -> int:
+    def minor(self, row: int, col: int) -> float:
         """Calculates the minor for an element at (row, col) in the 2x2 submatrix of the 3x3 matrix."""
         if self.rows != 3 or self.cols != 3:
             raise ValueError("Minor calculation only implemented for 3x3 matrices.")
         return self.submatrix(row, col).determinant()
+
+    # cofactor multiplication rules
+    # + - +
+    # - + -
+    # + - +
+    # i.e. if row + col is odd, multiply by -1
+    def cofactor(self, row: int, col: int) -> float:
+        """Calculates the cofactor for an element at (row, col) in the 2x2 submatrix of the 3x3 matrix."""
+        if self.rows != 3 or self.cols != 3:
+            raise ValueError("Cofactor calculation only implemented for 3x3 matrices.")
+
+        minor = self.minor(row, col)
+
+        if (row + col) % 2 == 0:
+            return minor
+        return -minor
 
     def inverse(self) -> None:
         """Calculates inverse of the matrix."""

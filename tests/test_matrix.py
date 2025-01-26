@@ -181,7 +181,7 @@ def test_minor_3x3() -> None:
 def test_cofactor_3x3() -> None:
     m1 = RTMatrix(matrix=[[3, 5, 0], [2, -1, -7], [6, -1, 5]])
 
-    assert m1.minor() == -12
-    assert m1.cofactor() == -12
-    assert m1.minor() == 25
-    assert m1.cofactor() == -25
+    assert m1.minor(0, 0) == -12
+    assert m1.cofactor(0, 0) == -12
+    assert m1.minor(1, 0) == 25
+    assert m1.cofactor(1, 0) == -25
