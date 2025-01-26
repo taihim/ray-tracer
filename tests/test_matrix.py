@@ -140,3 +140,16 @@ def test_tuple_identity_multiplication() -> None:
     t1 = CustomTuple(1, 2, 3, 4)
 
     assert i1 * t1 == t1
+
+def test_transpose() -> None:
+    m1 = RTMatrix(matrix=[[0, 9, 3, 0], [9, 8, 0, 8], [1, 8, 5, 3], [0, 0, 5, 8]])
+    m1.transpose(inplace=True)
+
+    assert m1 == RTMatrix(matrix=[[0, 9, 1, 0], [9, 8, 8, 0], [3, 0, 5, 5], [0, 8, 3, 8]])
+
+
+def test_identity_transpose() -> None:
+    i1 = RTMatrix.identity()
+    i2 = i1.transpose()
+
+    assert i1 == i2
