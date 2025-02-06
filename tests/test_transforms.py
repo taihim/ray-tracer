@@ -1,5 +1,7 @@
+import math
+
 from src.ray_tracer import CustomTuple
-from src.ray_tracer.matrix.transforms import scale, translate
+from src.ray_tracer.matrix.transforms import rotate_x, rotate_y, rotate_z, scale, translate
 
 
 def test_translation() -> None:
@@ -54,3 +56,48 @@ def test_reflection() -> None:
 
     assert t1 * p1 == CustomTuple.point(-2, 3, 4)
     assert t1 * v1 == CustomTuple.vector(-2, 3, 4)
+
+
+def test_rotation_x() -> None:
+    t1 = rotate_x(math.pi / 2)  # 90 deg rotation
+    t2 = rotate_x(math.pi / 4)  # 45 deg rotation
+    t3 = rotate_x(math.pi)  # 180 deg rotation (puts it on opposite side of starting point. i.e. -1 in this case)
+
+    p1 = CustomTuple.point(0, 1, 0)
+
+    assert t1 * p1 == CustomTuple.point(0, 0, 1)
+    assert t2 * p1 == CustomTuple.point(0, math.sqrt(2) / 2, math.sqrt(2) / 2)
+    assert t3 * p1 == CustomTuple.point(0, -1, 0)
+
+
+def test_rotation_x_inverse() -> None:
+    t1 = rotate_x(math.pi / 4)  # 90 deg rotation
+    t1_inv = t1.inverse()
+
+    p1 = CustomTuple.point(0, 1, 0)
+
+    assert t1_inv * p1 == CustomTuple.point(0, math.sqrt(2) / 2, -math.sqrt(2) / 2)
+
+
+def test_rotation_y() -> None:
+    t1 = rotate_y(math.pi / 2)  # 90 deg rotation
+    t2 = rotate_y(math.pi / 4)  # 45 deg rotation
+    t3 = rotate_y(math.pi)  # 180 deg rotation (puts it on opposite side of starting point. i.e. -1 in this case)
+
+    p1 = CustomTuple.point(0, 0, 1)
+
+    assert t1 * p1 == CustomTuple.point(1, 0, 0)
+    assert t2 * p1 == CustomTuple.point(math.sqrt(2) / 2, 0, math.sqrt(2) / 2)
+    assert t3 * p1 == CustomTuple.point(0, 0, -1)
+
+
+def test_rotation_z() -> None:
+    t1 = rotate_z(math.pi / 2)  # 90 deg rotation
+    t2 = rotate_z(math.pi / 4)  # 45 deg rotation
+    t3 = rotate_z(math.pi)  # 180 deg rotation (puts it on opposite side of starting point. i.e. -1 in this case)
+
+    p1 = CustomTuple.point(0, 1, 0)
+
+    assert t1 * p1 == CustomTuple.point(-1, 0, 0)
+    assert t2 * p1 == CustomTuple.point(-math.sqrt(2) / 2, math.sqrt(2) / 2, 0)
+    assert t3 * p1 == CustomTuple.point(0, -1, 0)
