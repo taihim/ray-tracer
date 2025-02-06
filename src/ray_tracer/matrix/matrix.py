@@ -1,5 +1,5 @@
 from copy import deepcopy
-from typing import Optional, Union, overload
+from typing import Union, overload
 
 from src.ray_tracer.tuples import CustomTuple
 from src.ray_tracer.utils import compare_float
@@ -98,6 +98,10 @@ class RTMatrix:
             else CustomTuple(x=output_matrix[0][0], y=output_matrix[1][0], z=output_matrix[2][0], w=output_matrix[3][0])
         )
 
+    def __rmul__(self, mat: Union["RTMatrix", CustomTuple]) -> Union["RTMatrix", CustomTuple]:
+        """__rmul__ implementation for RTMatrix."""
+        return self * mat
+
     @staticmethod
     def identity(rows: int = 4, cols: int = 4) -> "RTMatrix":
         """Return an identity matrix with the given dimensions."""
@@ -107,7 +111,7 @@ class RTMatrix:
 
         return matrix
 
-    def transpose(self, inplace: bool = False) -> Optional["RTMatrix"]:  # noqa: FBT001, FBT002
+    def transpose(self, inplace: bool = False) -> "RTMatrix":  # noqa: FBT001, FBT002
         """Transpose a matrix. Inplace = True modifies the existing matrix."""
         transposed = []
         for i in range(self.cols):
@@ -115,7 +119,7 @@ class RTMatrix:
             transposed.append(new_row)
         if inplace:
             self.data = transposed
-            return None
+            return self
 
         return RTMatrix(matrix=transposed)
 
