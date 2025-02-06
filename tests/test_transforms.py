@@ -1,7 +1,7 @@
 import math
 
 from src.ray_tracer import CustomTuple
-from src.ray_tracer.matrix.transforms import rotate_x, rotate_y, rotate_z, scale, translate
+from src.ray_tracer.matrix.transforms import rotate_x, rotate_y, rotate_z, scale, shear, translate
 
 
 def test_translation() -> None:
@@ -101,3 +101,51 @@ def test_rotation_z() -> None:
     assert t1 * p1 == CustomTuple.point(-1, 0, 0)
     assert t2 * p1 == CustomTuple.point(-math.sqrt(2) / 2, math.sqrt(2) / 2, 0)
     assert t3 * p1 == CustomTuple.point(0, -1, 0)
+
+
+def test_shear_xy() -> None:
+    t1 = shear(1, 0, 0, 0, 0, 0)
+
+    p1 = CustomTuple.point(2, 3, 4)
+
+    assert t1 * p1 == CustomTuple.point(5, 3, 4)
+
+
+def test_shear_xz() -> None:
+    t1 = shear(0, 1, 0, 0, 0, 0)
+
+    p1 = CustomTuple.point(2, 3, 4)
+
+    assert t1 * p1 == CustomTuple.point(6, 3, 4)
+
+
+def test_shear_yx() -> None:
+    t1 = shear(0, 0, 1, 0, 0, 0)
+
+    p1 = CustomTuple.point(2, 3, 4)
+
+    assert t1 * p1 == CustomTuple.point(2, 5, 4)
+
+
+def test_shear_yz() -> None:
+    t1 = shear(0, 0, 0, 1, 0, 0)
+
+    p1 = CustomTuple.point(2, 3, 4)
+
+    assert t1 * p1 == CustomTuple.point(2, 7, 4)
+
+
+def test_shear_zx() -> None:
+    t1 = shear(0, 0, 0, 0, 1, 0)
+
+    p1 = CustomTuple.point(2, 3, 4)
+
+    assert t1 * p1 == CustomTuple.point(2, 3, 6)
+
+
+def test_shear_zy() -> None:
+    t1 = shear(0, 0, 0, 0, 0, 1)
+
+    p1 = CustomTuple.point(2, 3, 4)
+
+    assert t1 * p1 == CustomTuple.point(2, 3, 7)

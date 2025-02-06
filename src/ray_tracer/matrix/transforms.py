@@ -57,3 +57,17 @@ def rotate_z(rad: float) -> RTMatrix:
     rotation_matrix[1][1] = math.cos(rad)
 
     return rotation_matrix
+
+
+def shear(x_y: float, x_z: float, y_x: float, y_z: float, z_x: float, z_y: float) -> RTMatrix:
+    """Create and return a shear matrix."""
+    shear_matrix = RTMatrix.identity()
+
+    shear_matrix[0][1] = x_y
+    shear_matrix[0][2] = x_z
+    shear_matrix[1][0] = y_x
+    shear_matrix[1][2] = y_z
+    shear_matrix[2][0] = z_x
+    shear_matrix[2][1] = z_y
+
+    return shear_matrix
