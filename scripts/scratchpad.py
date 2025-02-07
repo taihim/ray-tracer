@@ -39,5 +39,25 @@ iterate thru the list
 
 
 import math
+from typing import cast
 
-print(math.sin()))
+from src.ray_tracer import CustomTuple
+from src.ray_tracer.matrix.transforms import Transform
+
+t1 = Transform().rotate_x(math.pi / 2)
+t2 = Transform().scale(5, 5, 5)
+t3 = Transform().translate(10, 5, 7)
+
+t_chain = Transform().rotate_x(math.pi / 2).scale(5, 5, 5).translate(10, 5, 7)
+
+
+p1 = CustomTuple.point(1, 0, 1)
+
+mtr = cast(Transform, t3 * t2 * t1)
+
+print(mtr.transformation_matrix.data)
+print(t_chain.transformation_matrix.data)
+
+
+print(mtr * p1)
+print(t_chain * p1)
