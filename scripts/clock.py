@@ -9,7 +9,6 @@ cv = Canvas(500, 500, (0, 0, 0))
 mid = 500 // 2
 radius = mid // 2  # pixels. i.e the distance from origin(250, 250) to any time spot
 
-cv.pixels[mid][mid] = ColorTuple(1, 1, 1)
 
 origin = CustomTuple.point(0, 0, 0)
 twelve = CustomTuple.point(0, 0, 1)
