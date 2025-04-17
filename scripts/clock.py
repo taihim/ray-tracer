@@ -30,4 +30,4 @@ for point in points:
     cv.pixels[int(-point.z)][int(point.x)] = ColorTuple(1, 1, 1)
 
 data = cv.canvas_to_ppm()
-cv.save(data=data)
+cv.save(data=data, path="./images/clock.ppm")
