@@ -72,21 +72,21 @@ class CustomTuple:
 
     def __mul__(self, scalar: float) -> "CustomTuple":
         """Define scalar multiplication."""
-        self.x *= scalar
-        self.y *= scalar
-        self.z *= scalar
-        self.w *= scalar
-
-        return self
+        return CustomTuple(
+            self.x * scalar,
+            self.y * scalar,
+            self.z * scalar,
+            self.w * scalar
+        )
 
     def __truediv__(self, scalar: float) -> "CustomTuple":
         """Define scalar division."""
-        self.x /= scalar
-        self.y /= scalar
-        self.z /= scalar
-        self.w /= scalar
-
-        return self
+        return CustomTuple(
+            self.x / scalar,
+            self.y / scalar,
+            self.z / scalar,
+            self.w / scalar
+        )
 
     # todo: find a better exception than ValueError
     def magnitude(self) -> float:
