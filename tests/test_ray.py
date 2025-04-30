@@ -1,5 +1,4 @@
-from src.ray_tracer import CustomTuple
-from src.ray_tracer.ray import Ray
+from src.ray_tracer import CustomTuple, Ray, Sphere
 
 
 def test_ray_init() -> None:
@@ -15,3 +14,10 @@ def test_ray_position() -> None:
     assert Ray.position(r1, 1) == CustomTuple(3, 3, 4, 1)
     assert Ray.position(r1, -1) == CustomTuple(1, 3, 4, 1)
     assert Ray.position(r1, 2.5) == CustomTuple(4.5, 3, 4, 1)
+
+def test_ray_sphere_intersection() -> None:
+    r1 = Ray(CustomTuple(2, 3, 4, 1), CustomTuple(1, 0, 0))
+    s1 = Sphere()
+
+    print(s1)
+    assert 1==2
