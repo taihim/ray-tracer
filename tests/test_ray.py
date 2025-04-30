@@ -19,5 +19,5 @@ def test_ray_sphere_intersection() -> None:
     r1 = Ray(CustomTuple(2, 3, 4, 1), CustomTuple(1, 0, 0))
     s1 = Sphere()
 
-    print(s1)
+    print(s1.id)
     assert 1==2

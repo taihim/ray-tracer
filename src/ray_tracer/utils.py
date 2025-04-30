@@ -9,5 +9,21 @@ def compare_float(num1: float, num2: float) -> bool:
         raise TypeError("This function only supports integers and floating point numbers.")
     return abs(num1 - num2) < EPSILON
 
-def intersect(ray, sphere) -> [float]:
-    pass
+def intersect(ray, sphere) -> tuple[float]:
+    """Calculate and return the intersection points for a given Ray and Sphere.
+        Args:s
+            ray: Ray object
+            sphere: Sphere object
+
+        Returns:
+            tuple containing the intersection points
+    """
+    
+    ray
+    
+    sphere.radius
+
+
+    
+    
+    return ()
