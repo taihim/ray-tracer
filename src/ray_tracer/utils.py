@@ -18,6 +18,13 @@ def intersect(ray, sphere) -> tuple[float]:
         Returns:
             tuple containing the intersection points
     """
+    # equation
+    #P**2 - R**2 = 0
+    # replace P with a Ray
+    # (O + Dt) ** 2
+    # a = D^2
+    # b = 2OD
+    # c = 
     
     ray
     
