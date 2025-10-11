@@ -22,16 +22,16 @@ class Ray:
         """
         return ray.origin + ray.direction * t;            
 
+
 def intersect(ray, sphere) -> tuple[float]:
     """Calculate and return the intersection points for a given Ray and Sphere.
-        Args:s
-            ray: Ray object
-            sphere: Sphere object
+    Args:
+        ray: Ray object
+        sphere: Sphere object
 
-        Returns:
-            tuple containing the intersection points
+    Returns:
+        tuple containing the intersection points
     """
-    
     # first we calculate the discriminant
     sphere_to_ray = ray.origin - sphere.origin
     a = ray.direction.dot(ray.direction)
@@ -41,9 +41,9 @@ def intersect(ray, sphere) -> tuple[float]:
     discriminant = (b**2) - (4 * a * c)
     
     # if discriminant negative, no intersection occurs
-    if discriminant < 0: 
+    if discriminant < 0:
         return []
-    
+
     t1 = (-b - sqrt(discriminant)) / 2 * a
     t2 = (-b + sqrt(discriminant)) / 2 * a
 
