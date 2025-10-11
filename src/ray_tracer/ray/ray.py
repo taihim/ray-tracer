@@ -1,3 +1,4 @@
+from math import sqrt
 from src.ray_tracer.tuples import CustomTuple
 
 
@@ -21,3 +22,29 @@ class Ray:
         """
         return ray.origin + ray.direction * t;            
 
+def intersect(ray, sphere) -> tuple[float]:
+    """Calculate and return the intersection points for a given Ray and Sphere.
+        Args:s
+            ray: Ray object
+            sphere: Sphere object
+
+        Returns:
+            tuple containing the intersection points
+    """
+    
+    # first we calculate the discriminant
+    sphere_to_ray = ray.origin - CustomTuple(0, 0, 0, 1)
+    a = ray.direction.dot(ray.direction)
+    b = 2 * ray.direction.dot(sphere_to_ray)
+    c = sphere_to_ray.dot(sphere_to_ray) - 1
+
+    discriminant = (b**2) - (4 * a * c)
+    
+    # if discriminant negative, no intersection occurs
+    if discriminant < 0: 
+        return []
+    
+    t1 = (-b - sqrt(discriminant)) / 2 * a
+    t2 = (-b + sqrt(discriminant)) / 2 * a
+
+    return (t1, t2)
