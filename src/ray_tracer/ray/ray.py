@@ -33,7 +33,7 @@ def intersect(ray, sphere) -> tuple[float]:
     """
     
     # first we calculate the discriminant
-    sphere_to_ray = ray.origin - CustomTuple(0, 0, 0, 1)
+    sphere_to_ray = ray.origin - sphere.origin
     a = ray.direction.dot(ray.direction)
     b = 2 * ray.direction.dot(sphere_to_ray)
     c = sphere_to_ray.dot(sphere_to_ray) - 1
