@@ -22,8 +22,8 @@ def test_ray_sphere_intersection() -> None:
 
     intersections = intersect(r1, s1)
     assert len(intersections) == 2
-    assert intersections[0] == 4.0
-    assert intersections[1] == 6.0
+    assert intersections[0].t == 4.0
+    assert intersections[1].t == 6.0
 
 def test_ray_sphere_intersection_tangent() -> None:
     r1 = Ray(CustomTuple(0, 1, -5, 1), CustomTuple(0, 0, 1))
@@ -31,8 +31,8 @@ def test_ray_sphere_intersection_tangent() -> None:
 
     intersections = intersect(r1, s1)
     assert len(intersections) == 2
-    assert intersections[0] == 5.0
-    assert intersections[1] == 5.0
+    assert intersections[0].t == 5.0
+    assert intersections[1].t == 5.0
 
 def test_ray_sphere_intersection_miss() -> None:
     r1 = Ray(CustomTuple(0, 2, -5, 1), CustomTuple(0, 0, 1))
@@ -47,8 +47,8 @@ def test_ray_spehere_intersection_inside() -> None:
 
     intersections = intersect(r1, s1)
     assert len(intersections) == 2
-    assert intersections[0] == -1.0
-    assert intersections[1] == 1.0
+    assert intersections[0].t == -1.0
+    assert intersections[1].t == 1.0
 
 def test_ray_spehere_intersection_behind() -> None:
     r1 = Ray(CustomTuple(0, 0, 5, 1), CustomTuple(0, 0, 1))
@@ -56,5 +56,15 @@ def test_ray_spehere_intersection_behind() -> None:
 
     intersections = intersect(r1, s1)
     assert len(intersections) == 2
-    assert intersections[0] == -6.0
-    assert intersections[1] == -4.0
+    assert intersections[0].t == -6.0
+    assert intersections[1].t == -4.0
+
+def test_intersection_objects() -> None:
+    r1 = Ray(CustomTuple(0, 0, -5, 1), CustomTuple(0, 0, 1))
+    s1 = Sphere()
+
+    xs = intersect(r1, s1)
+    assert len(xs) == 2
+    assert xs[0].object == s1
+    assert xs[1].object == s1
+    
