@@ -50,7 +50,7 @@ def intersect(ray: "Ray", sphere: Sphere) -> tuple[Intersection, Intersection] |
 
     return (Intersection(t1, sphere), Intersection(t2, sphere))
 
-def hit(intersections: list[Intersection]) -> Intersection | None:
+def hit(intersections: tuple[Intersection, ...]) -> Intersection | None:
     '''Determine which intersection should actually be rendered given a list of intersections.'''
     
     lowest = Intersection(float("inf"), Sphere())
