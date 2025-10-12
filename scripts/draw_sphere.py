@@ -4,16 +4,16 @@ from typing import cast
 from src.ray_tracer import Canvas, ColorTuple, CustomTuple
 from src.ray_tracer.matrix.transforms import Transform
 
-cv = Canvas(500, 500, (0, 0, 0))
+cv = Canvas(100, 100, (0, 0, 0))
 
-mid = 500 // 2
-radius = mid // 2  # pixels. i.e the distance from origin(250, 250) to any time spot
+mid = 100 // 2
+radius = mid // 2  # pixels. i.e the distance from origin(50, 50) to any time spot
 
 
 origin = CustomTuple.point(0, 0, 0)
-twelve = CustomTuple.point(0, 0, 1)
+# twelve = CustomTuple.point(0, 0, 1)
 
-points = [twelve]
+# points = [twelve]
 for hour in range(1, 12):
     rotation = Transform().rotate_y(hour * (math.pi / 6))
     hour_position = cast(CustomTuple, rotation * twelve)
