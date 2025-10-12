@@ -1,5 +1,4 @@
-from src.ray_tracer import CustomTuple, Ray, Sphere
-from src.ray_tracer.ray.ray import intersect
+from src.ray_tracer import CustomTuple, Ray, Sphere, intersect
 
 
 def test_ray_init() -> None:
@@ -67,4 +66,3 @@ def test_intersection_objects() -> None:
     assert len(xs) == 2
     assert xs[0].object == s1
     assert xs[1].object == s1
-    

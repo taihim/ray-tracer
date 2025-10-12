@@ -9,5 +9,12 @@ class Intersection:
         self.t = t
         self.object = obj
     
+    def __lt__(self, other: "Intersection") -> bool:
+        '''Sort based on value of t'''
+        return self.t < other.t
+    
+    def __str__(self) -> str:
+        return f"Intersection object with t: {self.t} and object: {self.object}"
+    
 def intersections(*args: Intersection) -> tuple[Intersection, ...]:
-    return args
+    return tuple(sorted(args))

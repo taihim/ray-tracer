@@ -1,7 +1,7 @@
 from math import sqrt
 from src.ray_tracer.sphere import Sphere
 from src.ray_tracer.tuples import CustomTuple
-from src.ray_tracer.intersection import Intersection
+from src.ray_tracer.intersection import Intersection, intersections
 
 class Ray:
     """Primitive Ray object for the Ray Tracer."""
@@ -49,3 +49,19 @@ def intersect(ray: "Ray", sphere: Sphere) -> tuple[Intersection, Intersection] |
     t2 = float((-b + sqrt(discriminant)) / (2 * a))
 
     return (Intersection(t1, sphere), Intersection(t2, sphere))
+
+def hit(intersections: list[Intersection]) -> Intersection | None:
+    '''Determine which intersection should actually be rendered given a list of intersections.'''
+    
+    lowest = Intersection(float("inf"), Sphere())
+    
+    for intersection in intersections:
+        if intersection.t < 0:
+            continue
+        if intersection.t < lowest.t:
+            lowest = intersection
+
+    if lowest.t == float("inf"):
+        return None
+    
+    return lowest
