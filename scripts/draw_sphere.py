@@ -1,10 +1,6 @@
-import math
-from typing import cast
+from src.ray_tracer import Canvas, ColorTuple, CustomTuple, Ray, Sphere, hit, intersect
 
-from src.ray_tracer import Canvas, ColorTuple, CustomTuple, Ray, Sphere, Intersection, hit, intersections, intersect
-from src.ray_tracer.matrix.transforms import Transform
-
-canvas_pixels = 100
+canvas_pixels = 200
 cv = Canvas(canvas_pixels, canvas_pixels, (0, 0, 0))
 
 mid = canvas_pixels // 2
@@ -33,7 +29,7 @@ for y in range(canvas_pixels):
         position = CustomTuple.point(world_x, world_y, wall_z)
         r = Ray(ray_origin, (position - ray_origin).normalize())
         xs = intersect(r, s1)
-        
+
         if hit(xs):
             cv.pixels[y][x] = ColorTuple(1, 0, 0)
 
