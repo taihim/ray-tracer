@@ -1,27 +1,27 @@
+import math
+from multiprocessing import Pool
+from typing import cast
+
 from src.ray_tracer import Canvas, ColorTuple, CustomTuple, Ray, Sphere, hit, intersect
+from src.ray_tracer.matrix.transforms import Transform
 
-canvas_pixels = 200
-cv = Canvas(canvas_pixels, canvas_pixels, (0, 0, 0))
-
-mid = canvas_pixels // 2
-radius = mid // 2  # pixels. i.e the distance from origin(50, 50) to any time spot
-
-
-origin = CustomTuple.point(0, 0, 0)
+canvas_pixels = 150
 
 ray_origin = CustomTuple.point(0, 0, -5)
-ray_direction = CustomTuple.point(1, 0, 0)
 s1 = Sphere()
+# s1.set_transform(Transform().scale(1, 0.5, 1))
+# s1.set_transform(cast("Transform", Transform().shear(1, 0, 0, 0, 0, 0) * Transform().scale(0.5, 1, 1)))
+s1.set_transform(cast("Transform", Transform().rotate_z(math.pi / 4) * Transform().scale(0.5, 1, 1)))
 
 wall_z = 10
 wall_size = 7
-
 pixel_size = wall_size / canvas_pixels
-
 half = wall_size / 2
 
 
-for y in range(canvas_pixels):
+def render_row(y: int) -> list[tuple[int, int, tuple[float, float, float]]]:
+    """Render a single row of pixels."""
+    results: list[tuple[int, int, tuple[float, float, float]]] = []
     world_y = half - pixel_size * y
     for x in range(canvas_pixels):
         world_x = -half + pixel_size * x
@@ -31,10 +31,21 @@ for y in range(canvas_pixels):
         xs = intersect(r, s1)
 
         if hit(xs):
-            if world_y > 0:
-                cv.pixels[y][x] = ColorTuple(1, 0, 0)
-            else:
-                cv.pixels[y][x] = ColorTuple(1, 1, 1)
+            color = (1.0, 0.0, 0.0) if world_y > 0 else (1.0, 1.0, 1.0)
+            results.append((y, x, color))
 
-data = cv.canvas_to_ppm()
-cv.save(data=data, path="./images/sphere.ppm")
+    return results
+
+
+if __name__ == "__main__":
+    cv = Canvas(canvas_pixels, canvas_pixels, (0, 0, 0))
+
+    with Pool() as pool:
+        rows = pool.map(render_row, range(canvas_pixels))
+
+    for row_results in rows:
+        for y, x, color in row_results:
+            cv.pixels[y][x] = ColorTuple(*color)
+
+    data = cv.canvas_to_ppm()
+    cv.save(data=data, path="./images/sphere.ppm")

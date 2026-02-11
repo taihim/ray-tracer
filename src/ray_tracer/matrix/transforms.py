@@ -1,8 +1,8 @@
 import math
 from typing import Union, cast
 
-from src.ray_tracer.tuples import CustomTuple
 from src.ray_tracer.matrix import RTMatrix
+from src.ray_tracer.tuples import CustomTuple
 
 
 class Transform:
@@ -93,7 +93,6 @@ class Transform:
     ) -> Union["Transform", RTMatrix, CustomTuple]:
         """__mul__ implementation for Transform objects."""
         if isinstance(multiplier, Transform):
-            print("Multiplying transforms")
             self.transformation_matrix = cast("RTMatrix", self.transformation_matrix * multiplier.transformation_matrix)
             return self
         return self.transformation_matrix * multiplier
@@ -111,6 +110,7 @@ class Transform:
 
     def inverse(self) -> "Transform":
         """Calculate reverse transformation matrix."""
-        self.transformation_matrix = self.transformation_matrix.inverse()
+        result = Transform(self.dims[0])
+        result.transformation_matrix = self.transformation_matrix.inverse()
 
-        return self
+        return result

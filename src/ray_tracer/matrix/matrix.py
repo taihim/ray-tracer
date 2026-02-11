@@ -1,4 +1,3 @@
-from copy import deepcopy
 from typing import Union, overload
 
 from src.ray_tracer.tuples import CustomTuple
@@ -146,10 +145,7 @@ class RTMatrix:
             row: the row to remove from the original matrix
             col: the column to remove from the original matrix
         """
-        new_matrix = deepcopy(self.data)
-        new_matrix.pop(row)
-        for matrix_row in new_matrix:
-            matrix_row.pop(col)
+        new_matrix = [r[:col] + r[col + 1 :] for i, r in enumerate(self.data) if i != row]
 
         return RTMatrix(matrix=new_matrix)
 
@@ -181,7 +177,8 @@ class RTMatrix:
 
     def inverse(self) -> "RTMatrix":
         """Calculate and return the inverse of the matrix."""
-        if not self.invertable():
+        det = self.determinant()
+        if det == 0:
             raise ValueError("Matrix is not invertable.")
 
         inverse_matrix = RTMatrix(rows=self.rows, cols=self.cols)
@@ -190,5 +187,5 @@ class RTMatrix:
             for col in range(self.cols):
                 c = self.cofactor(row, col)
 
-                inverse_matrix[col][row] = c / self.determinant()
+                inverse_matrix[col][row] = c / det
         return inverse_matrix
