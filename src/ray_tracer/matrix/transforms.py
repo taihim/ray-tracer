@@ -1,7 +1,8 @@
 import math
 from typing import Union, cast
 
-from src.ray_tracer import CustomTuple, RTMatrix
+from src.ray_tracer.tuples import CustomTuple
+from src.ray_tracer.matrix import RTMatrix
 
 
 class Transform:

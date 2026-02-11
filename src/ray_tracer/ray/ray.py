@@ -1,9 +1,10 @@
 from math import sqrt
+from typing import cast
 
 from src.ray_tracer.intersection import Intersection
+from src.ray_tracer.matrix.transforms import Transform
 from src.ray_tracer.sphere import Sphere
 from src.ray_tracer.tuples import CustomTuple
-from src.ray_tracer.matrix.transforms import Transform
 
 
 class Ray:
@@ -35,7 +36,8 @@ class Ray:
         Returns:
             A new Ray object that represents the transformed Ray
         """
-        return Ray(matrix * self.origin , self.direction.transform(matrix))
+        return Ray(cast("CustomTuple", matrix * self.origin), cast("CustomTuple", matrix * self.direction))
+
 
 def intersect(ray: "Ray", sphere: Sphere) -> tuple[Intersection, Intersection] | tuple[()]:
     """Calculate and return the intersection points for a given Ray and Sphere.
@@ -78,6 +80,3 @@ def hit(intersections: tuple[Intersection, ...]) -> Intersection | None:
         return None
 
     return lowest
-
-
-def transform

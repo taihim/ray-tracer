@@ -1,3 +1,3 @@
-from .ray import Ray, intersect, hit
+from .ray import Ray, hit, intersect
 
-__all__ = ["Ray", "intersect", "hit"]
+__all__ = ["Ray", "hit", "intersect"]
