@@ -41,6 +41,7 @@ class Ray:
 
 def intersect(ray: "Ray", sphere: Sphere) -> tuple[Intersection, Intersection] | tuple[()]:
     """Calculate and return the intersection points for a given Ray and Sphere.
+
     Args:
         ray: Ray object
         sphere: Sphere object
@@ -48,10 +49,12 @@ def intersect(ray: "Ray", sphere: Sphere) -> tuple[Intersection, Intersection] |
     Returns:
         tuple containing the intersection points
     """
+    ray2 = ray.transform(sphere.transform.inverse())
+
     # first we calculate the discriminant
-    sphere_to_ray = ray.origin - sphere.origin
-    a = ray.direction.dot(ray.direction)
-    b = 2 * ray.direction.dot(sphere_to_ray)
+    sphere_to_ray = ray2.origin - sphere.origin
+    a = ray2.direction.dot(ray2.direction)
+    b = 2 * ray2.direction.dot(sphere_to_ray)
     c = sphere_to_ray.dot(sphere_to_ray) - 1
 
     discriminant = (b**2) - (4 * a * c)
