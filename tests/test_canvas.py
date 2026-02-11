@@ -1,3 +1,5 @@
+import pytest
+
 from src.ray_tracer import Canvas, ColorTuple
 
 
@@ -44,3 +46,44 @@ def test_canvas_to_ppm() -> None:
     assert output_split[12] == "76 178"
 
     assert output_str[-1] == "\n"
+
+
+def test_canvas_getitem_tuple():
+    cv = Canvas(5, 5, (0.1, 0.2, 0.3))
+    assert cv[2, 3] == ColorTuple(0.1, 0.2, 0.3)
+
+
+def test_canvas_getitem_int():
+    cv = Canvas(5, 5, (0.1, 0.2, 0.3))
+    row = cv[2]
+    assert len(row) == 5
+    assert row[0] == ColorTuple(0.1, 0.2, 0.3)
+
+
+def test_canvas_setitem_tuple():
+    cv = Canvas(5, 5)
+    cv[1, 2] = ColorTuple(1, 0, 0)
+    assert cv[1, 2] == ColorTuple(1, 0, 0)
+
+
+def test_canvas_setitem_invalid_value():
+    cv = Canvas(5, 5)
+    with pytest.raises(TypeError, match="This class only supports ColorTuples"):
+        cv[0, 0] = "not a color"
+
+
+def test_canvas_setitem_invalid_index():
+    cv = Canvas(5, 5)
+    with pytest.raises(TypeError, match="Index must be a tuple of two integers"):
+        cv[0] = ColorTuple(1, 0, 0)
+
+
+def test_canvas_save(tmp_path):
+    cv = Canvas(2, 2, (1, 0, 0))
+    data = cv.canvas_to_ppm()
+    path = str(tmp_path / "test.ppm")
+    cv.save(data=data, path=path)
+
+    with open(path) as f:
+        contents = f.read()
+    assert contents == data

@@ -161,3 +161,18 @@ def test_cross_product() -> None:
     with pytest.raises(ValueError) as exc1:
         p1.cross(t1)
     assert str(exc1.value) == "Can only compute cross product for vectors."
+
+
+def test_point_repr():
+    p1 = CustomTuple.point(1, 2, 3)
+    assert "Point" in repr(p1)
+
+
+def test_point_invalid_type():
+    with pytest.raises(TypeError, match="CustomTuple only accepts integer or floating point values"):
+        CustomTuple.point("a", 2, 3)
+
+
+def test_vector_invalid_type():
+    with pytest.raises(TypeError, match="CustomTuple only accepts integer or floating point values"):
+        CustomTuple.vector(1, "b", 3)

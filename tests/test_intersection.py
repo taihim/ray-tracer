@@ -16,3 +16,11 @@ def test_intersection_aggregation() -> None:
     assert len(xs) == 2
     assert xs[0].t == 1
     assert xs[1].t == 2
+
+
+def test_intersection_str():
+    s1 = Sphere()
+    i1 = Intersection(3.5, s1)
+    result = str(i1)
+    assert "3.5" in result
+    assert "Intersection object" in result

@@ -188,3 +188,19 @@ def test_tranforms_chained() -> None:
 
     assert transform1 * p1 == CustomTuple.point(15, 0, 7)
     assert transform2 * p1 == CustomTuple.point(15, 0, 7)
+
+
+def test_transform_rmul_with_transform():
+    t1 = Transform().scale(2, 2, 2)
+    t2 = Transform().translate(1, 1, 1)
+    p1 = CustomTuple.point(1, 1, 1)
+
+    result = cast(Transform, t2.__rmul__(t1))
+    assert result * p1 == CustomTuple.point(3, 3, 3)
+
+
+def test_transform_rmul_with_tuple():
+    t1 = Transform().scale(2, 3, 4)
+    p1 = CustomTuple.point(1, 1, 1)
+    result = t1.__rmul__(p1)
+    assert result == CustomTuple.point(2, 3, 4)

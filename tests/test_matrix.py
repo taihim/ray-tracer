@@ -1,3 +1,5 @@
+import pytest
+
 from src.ray_tracer.matrix import RTMatrix
 from src.ray_tracer.tuples import CustomTuple
 
@@ -269,3 +271,95 @@ def test_inverse_multiplication() -> None:
 
     m3 = m1 * m2
     assert m3 * m2.inverse() == m1
+
+
+def test_matrix_repr():
+    m1 = RTMatrix(2, 3)
+    assert repr(m1) == "RTMatrix Object(rows=2, columns=3)"
+
+
+def test_matrix_getitem_tuple():
+    m1 = RTMatrix(matrix=[[1, 2], [3, 4]])
+    assert m1[0, 1] == 2
+    assert m1[1, 0] == 3
+
+
+def test_matrix_getitem_invalid():
+    m1 = RTMatrix(matrix=[[1, 2], [3, 4]])
+    with pytest.raises(TypeError, match="Index should be an int or a tuple of two integers"):
+        m1["bad"]
+
+
+def test_matrix_setitem_wrong_cols():
+    m1 = RTMatrix(2, 2)
+    with pytest.raises(ValueError, match="Expected 2 columns"):
+        m1[0] = [1.0, 2.0, 3.0]
+
+
+def test_matrix_setitem_invalid_index():
+    m1 = RTMatrix(2, 2)
+    with pytest.raises(TypeError, match="Expected index of type Int"):
+        m1["bad"] = [1.0, 2.0]
+
+
+def test_matrix_eq_non_matrix():
+    m1 = RTMatrix(matrix=[[1, 2], [3, 4]])
+    with pytest.raises(NotImplementedError):
+        m1 == "not a matrix"
+
+
+def test_matrix_eq_mismatched_dims():
+    m1 = RTMatrix(matrix=[[1, 2], [3, 4]])
+    m2 = RTMatrix(matrix=[[1, 2, 3], [4, 5, 6]])
+    with pytest.raises(ValueError, match="Can only compare matrices with the same dimensions"):
+        m1 == m2
+
+
+def test_matrix_mul_non_4_rows():
+    m1 = RTMatrix(matrix=[[1, 2], [3, 4]])
+    m2 = RTMatrix(matrix=[[5, 6], [7, 8]])
+    with pytest.raises(NotImplementedError, match="Multiplication for all dimensions not implemented"):
+        m1 * m2
+
+
+def test_matrix_rmul():
+    m1 = RTMatrix(matrix=[[1, 2, 3, 4], [5, 6, 7, 8], [9, 8, 7, 6], [5, 4, 3, 2]])
+    m2 = RTMatrix(matrix=[[-2, 1, 2, 3], [3, 2, 1, -1], [4, 3, 6, 5], [1, 2, 7, 8]])
+    assert m2.__rmul__(m1) == m2 * m1
+
+
+def test_determinant_non_square():
+    m1 = RTMatrix(2, 3)
+    with pytest.raises(ValueError, match="Determinant only defined for square matrices"):
+        m1.determinant()
+
+
+def test_determinant_too_large():
+    m1 = RTMatrix(5, 5)
+    for i in range(5):
+        m1[i] = [float(j) for j in range(5)]
+    with pytest.raises(ValueError, match="Only matrices with dimensions upto 4x4 are supported"):
+        m1.determinant()
+
+
+def test_minor_too_large():
+    m1 = RTMatrix(5, 5)
+    with pytest.raises(ValueError, match="Minor calculation only implemented for upto 4x4"):
+        m1.minor(0, 0)
+
+
+def test_cofactor_too_large():
+    m1 = RTMatrix(5, 5)
+    with pytest.raises(ValueError, match="Cofactor calculation only implemented for upto 4x4"):
+        m1.cofactor(0, 0)
+
+
+def test_inverse_singular():
+    m1 = RTMatrix(matrix=[[-4, 2, -2, -3], [9, 6, 2, 6], [0, -5, 1, -5], [0, 0, 0, 0]])
+    with pytest.raises(ValueError, match="Matrix is not invertable"):
+        m1.inverse()
+
+
+def test_matrix_init_invalid_type():
+    with pytest.raises(TypeError, match="Expected both rows and cols to be lists"):
+        RTMatrix(matrix=[1, 2, 3])
