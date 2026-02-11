@@ -1,7 +1,7 @@
 [project]
 name = "ray-tracer"
 version = "0.1.0"
-description = "Default template for PDM package"
+description = "A ray tracer built from scratch in Python"
 authors = [
     {name = "Taimur Ibrahim", email = "tai.him18@gmail.com"},
 ]
@@ -104,10 +104,3 @@ module = "tests.*"
 disallow_any_generics = false
 disallow_untyped_decorators = false
 
-[tool.pdm]
-distribution = false
-
-[tool.pdm.scripts]
-mypy = "mypy ."
-test = "pytest ."
-scratchpad = "python -m scripts.scratchpad"

@@ -4,10 +4,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Common Commands
 
-**Testing**: `pdm run test` or `pytest .`
-**Type checking**: `pdm run mypy` or `mypy .`  
+**Testing**: `PYTHONPATH=. uv run pytest .`
+**Type checking**: `PYTHONPATH=. uv run mypy .`
 **Linting**: `ruff check .` (format with `ruff format .`)
-**Run scratchpad script**: `pdm run scratchpad`
+**Run scratchpad script**: `PYTHONPATH=. uv run python -m scripts.scratchpad`
 
 ## Project Architecture
 
