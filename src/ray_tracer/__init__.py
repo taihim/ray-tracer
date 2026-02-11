@@ -5,4 +5,7 @@ from .tuples import ColorTuple, CustomTuple
 from .sphere import Sphere
 from .intersection import Intersection, intersections
 
-__all__ = ["Canvas", "ColorTuple", "CustomTuple", "RTMatrix", "Ray", "Sphere", "Intersection", "intersections", "hit", "intersect"]
+__all__ = [
+    "Canvas", "ColorTuple", "CustomTuple", "RTMatrix", "Ray",
+    "Sphere", "Intersection", "intersections", "hit", "intersect",
+]

@@ -48,4 +48,4 @@ if __name__ == "__main__":
             cv.pixels[y][x] = ColorTuple(*color)
 
     data = cv.canvas_to_ppm()
-    cv.save(data=data, path="./images/sphere.ppm")
+    Canvas.save(data=data, path="./images/sphere.ppm")

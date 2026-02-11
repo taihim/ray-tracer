@@ -82,7 +82,7 @@ def test_canvas_save(tmp_path):
     cv = Canvas(2, 2, (1, 0, 0))
     data = cv.canvas_to_ppm()
     path = str(tmp_path / "test.ppm")
-    cv.save(data=data, path=path)
+    Canvas.save(data=data, path=path)
 
     with open(path) as f:
         contents = f.read()
