@@ -91,6 +91,10 @@ known-first-party = ["src", "functions", "e2e", "db", "tests", "openapi"]
 max-args = 10
 max-returns = 10
 
+[tool.coverage.run]
+source = ["src/ray_tracer"]
+omit = ["src/cannon/*", "scripts/*"]
+
 [tool.mypy]
 packages = ["src"]
 python_version = "3.11"
