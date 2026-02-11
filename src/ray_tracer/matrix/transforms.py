@@ -18,7 +18,7 @@ class Transform:
         translation_matrix[1][3] = y
         translation_matrix[2][3] = z
 
-        self.transformation_matrix = cast(RTMatrix, translation_matrix * self.transformation_matrix)
+        self.transformation_matrix = cast("RTMatrix", translation_matrix * self.transformation_matrix)
 
         return self
 
@@ -29,7 +29,7 @@ class Transform:
         scaling_matrix[1][1] = y
         scaling_matrix[2][2] = z
 
-        self.transformation_matrix = cast(RTMatrix, scaling_matrix * self.transformation_matrix)
+        self.transformation_matrix = cast("RTMatrix", scaling_matrix * self.transformation_matrix)
 
         return self
 
@@ -42,7 +42,7 @@ class Transform:
         rotation_matrix[2][1] = math.sin(rad)
         rotation_matrix[2][2] = math.cos(rad)
 
-        self.transformation_matrix = cast(RTMatrix, rotation_matrix * self.transformation_matrix)
+        self.transformation_matrix = cast("RTMatrix", rotation_matrix * self.transformation_matrix)
 
         return self
 
@@ -55,7 +55,7 @@ class Transform:
         rotation_matrix[2][0] = -math.sin(rad)
         rotation_matrix[2][2] = math.cos(rad)
 
-        self.transformation_matrix = cast(RTMatrix, rotation_matrix * self.transformation_matrix)
+        self.transformation_matrix = cast("RTMatrix", rotation_matrix * self.transformation_matrix)
 
         return self
 
@@ -68,7 +68,7 @@ class Transform:
         rotation_matrix[1][0] = math.sin(rad)
         rotation_matrix[1][1] = math.cos(rad)
 
-        self.transformation_matrix = cast(RTMatrix, rotation_matrix * self.transformation_matrix)
+        self.transformation_matrix = cast("RTMatrix", rotation_matrix * self.transformation_matrix)
 
         return self
 
@@ -83,7 +83,7 @@ class Transform:
         shear_matrix[2][0] = z_x
         shear_matrix[2][1] = z_y
 
-        self.transformation_matrix = cast(RTMatrix, shear_matrix * self.transformation_matrix)
+        self.transformation_matrix = cast("RTMatrix", shear_matrix * self.transformation_matrix)
 
         return self
 
@@ -93,7 +93,7 @@ class Transform:
         """__mul__ implementation for Transform objects."""
         if isinstance(multiplier, Transform):
             print("Multiplying transforms")
-            self.transformation_matrix = cast(RTMatrix, self.transformation_matrix * multiplier.transformation_matrix)
+            self.transformation_matrix = cast("RTMatrix", self.transformation_matrix * multiplier.transformation_matrix)
             return self
         return self.transformation_matrix * multiplier
 
@@ -102,7 +102,9 @@ class Transform:
     ) -> Union["Transform", RTMatrix, CustomTuple]:
         """__rmul__ implementation for Transform objects."""
         if isinstance(multiplicand, Transform):
-            self.transformation_matrix = cast(RTMatrix, self.transformation_matrix * multiplicand.transformation_matrix)
+            self.transformation_matrix = cast(
+                "RTMatrix", self.transformation_matrix * multiplicand.transformation_matrix
+            )
             return self
         return self.transformation_matrix * multiplicand
 

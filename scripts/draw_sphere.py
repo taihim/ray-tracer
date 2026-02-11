@@ -31,7 +31,10 @@ for y in range(canvas_pixels):
         xs = intersect(r, s1)
 
         if hit(xs):
-            cv.pixels[y][x] = ColorTuple(1, 0, 0)
+            if world_y > 0:
+                cv.pixels[y][x] = ColorTuple(1, 0, 0)
+            else:
+                cv.pixels[y][x] = ColorTuple(1, 1, 1)
 
 data = cv.canvas_to_ppm()
 cv.save(data=data, path="./images/sphere.ppm")
