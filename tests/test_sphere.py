@@ -3,7 +3,18 @@ from src.ray_tracer.sphere import Sphere
 from src.ray_tracer.tuples import ColorTuple
 
 
-def test_sphere_material():
+def test_sphere_material_default():
+    """Test the default material of a sphere."""
+    sphere = Sphere()
+
+    assert sphere.material.color == ColorTuple(1, 1, 1)
+    assert sphere.material.ambient == 0.1
+    assert sphere.material.diffuse == 0.9
+    assert sphere.material.specular == 0.9
+    assert sphere.material.shininess == 200.0
+
+
+def test_sphere_material_assign():
     """Test the material of a sphere."""
     sphere = Sphere()
     material = Material(ColorTuple(0, 1, 1), 0.2, 0.8, 0.76, 100.0)
