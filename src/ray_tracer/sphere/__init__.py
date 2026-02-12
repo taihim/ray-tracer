@@ -1,3 +1,3 @@
-from .sphere import Sphere
+from .sphere import Sphere, normal_at
 
-__all__ = ["Sphere"]
+__all__ = ["Sphere", "normal_at"]

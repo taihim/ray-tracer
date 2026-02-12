@@ -1,3 +1,4 @@
+from typing import cast
 from uuid import uuid4
 
 from src.ray_tracer.matrix.transforms import Transform
@@ -18,3 +19,22 @@ class Sphere:
     def set_transform(self, transform: Transform) -> None:
         """Set the transform of the sphere."""
         self.transform = transform
+
+
+def normal_at(sphere: "Sphere", world_point: CustomTuple) -> CustomTuple:
+    """Calculate the normal vector at a given point on the sphere.
+
+    Args:
+        sphere (Sphere): The sphere object.
+        world_point (CustomTuple): The point on the sphere.
+
+    Returns:
+        CustomTuple: The normal vector at the given point.
+    """
+    object_point = cast("CustomTuple", sphere.transform.transformation_matrix.inverse() * world_point)
+    object_normal = object_point - CustomTuple(0, 0, 0, 1)
+
+    world_normal = cast("CustomTuple", sphere.transform.transformation_matrix.inverse().transpose() * object_normal)
+    world_normal.w = 0
+
+    return world_normal.normalize()

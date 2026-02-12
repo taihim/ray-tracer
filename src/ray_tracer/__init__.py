@@ -1,11 +1,19 @@
 from .canvas import Canvas
+from .intersection import Intersection, intersections
 from .matrix import RTMatrix
 from .ray import Ray, hit, intersect
-from .tuples import ColorTuple, CustomTuple
 from .sphere import Sphere
-from .intersection import Intersection, intersections
+from .tuples import ColorTuple, CustomTuple
 
 __all__ = [
-    "Canvas", "ColorTuple", "CustomTuple", "RTMatrix", "Ray",
-    "Sphere", "Intersection", "intersections", "hit", "intersect",
+    "Canvas",
+    "ColorTuple",
+    "CustomTuple",
+    "RTMatrix",
+    "Ray",
+    "Sphere",
+    "Intersection",
+    "intersections",
+    "hit",
+    "intersect",
 ]
