@@ -16,7 +16,7 @@ class CustomTuple:
 
     def __repr__(self) -> str:
         """Return string representation of the class."""
-        return f"{"Vector" if compare_float(self.w, 0.0) else "Point"}(x={self.x}, y={self.y}, z={self.z}, w={self.w})"
+        return f"{'Vector' if compare_float(self.w, 0.0) else 'Point'}(x={self.x}, y={self.y}, z={self.z}, w={self.w})"
 
     @staticmethod
     def point(x: float, y: float, z: float) -> "CustomTuple":
@@ -72,21 +72,11 @@ class CustomTuple:
 
     def __mul__(self, scalar: float) -> "CustomTuple":
         """Define scalar multiplication."""
-        return CustomTuple(
-            self.x * scalar,
-            self.y * scalar,
-            self.z * scalar,
-            self.w * scalar
-        )
+        return CustomTuple(self.x * scalar, self.y * scalar, self.z * scalar, self.w * scalar)
 
     def __truediv__(self, scalar: float) -> "CustomTuple":
         """Define scalar division."""
-        return CustomTuple(
-            self.x / scalar,
-            self.y / scalar,
-            self.z / scalar,
-            self.w / scalar
-        )
+        return CustomTuple(self.x / scalar, self.y / scalar, self.z / scalar, self.w / scalar)
 
     # todo: find a better exception than ValueError
     def magnitude(self) -> float:
@@ -123,3 +113,9 @@ class CustomTuple:
                 ((self.x * v2.y) - (self.y * v2.x)),
             )
         raise ValueError("Can only compute cross product for vectors.")
+
+    def reflect(self, normal: "CustomTuple") -> "CustomTuple":
+        """Reflect a vector about a normal vector."""
+        if compare_float(self.w, 0.0) and compare_float(normal.w, 0.0):
+            return self - (normal * 2 * self.dot(normal))
+        raise ValueError("Can only reflect vectors.")
