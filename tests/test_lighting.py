@@ -62,9 +62,9 @@ def test_lighting_light_behind_surface():
     m = Material(ColorTuple(1, 1, 1), 0.1, 0.9, 0.9, 200.0)
     position = CustomTuple(0, 0, 0, 1)
 
-    eye_vec = CustomTuple(0, -sqrt(2) / 2, -sqrt(2) / 2)
+    eye_vec = CustomTuple(0, 0, -1)
     normal_vec = CustomTuple(0, 0, -1)
-    light = PointLight(CustomTuple(0, 10, -10, 1), ColorTuple(1, 1, 1))
+    light = PointLight(CustomTuple(0, 0, 10, 1), ColorTuple(1, 1, 1))
 
     result = lighting(m, light, position, eye_vec, normal_vec)
-    assert result == ColorTuple(1.6364, 1.6364, 1.6364)
+    assert result == ColorTuple(0.1, 0.1, 0.1)
