@@ -3,15 +3,24 @@ from multiprocessing import Pool
 from typing import cast
 
 from src.ray_tracer import Canvas, ColorTuple, CustomTuple, Ray, Sphere, hit, intersect
+from src.ray_tracer.lights import lighting
+from src.ray_tracer.lights.point import PointLight
 from src.ray_tracer.matrix.transforms import Transform
+from src.ray_tracer.sphere import normal_at
 
-canvas_pixels = 150
+canvas_pixels = 250
 
 ray_origin = CustomTuple.point(0, 0, -5)
 s1 = Sphere()
-# s1.set_transform(Transform().scale(1, 0.5, 1))
+s1.material.color = ColorTuple(1, 1, 1)
+s1.set_transform(Transform().scale(1, 0.95, 1))
 # s1.set_transform(cast("Transform", Transform().shear(1, 0, 0, 0, 0, 0) * Transform().scale(0.5, 1, 1)))
-s1.set_transform(cast("Transform", Transform().rotate_z(math.pi / 4) * Transform().scale(0.5, 1, 1)))
+# s1.set_transform(cast("Transform", Transform().rotate_z(math.pi / 4) * Transform().scale(0.5, 1, 1)))
+
+light_position = CustomTuple(-10, 10, -10, 1)
+light_color = ColorTuple(1, 1, 1)
+light = PointLight(light_position, light_color)
+
 
 wall_z = 10
 wall_size = 7
@@ -30,9 +39,14 @@ def render_row(y: int) -> list[tuple[int, int, tuple[float, float, float]]]:
         r = Ray(ray_origin, (position - ray_origin).normalize())
         xs = intersect(r, s1)
 
-        if hit(xs):
-            color = (1.0, 0.0, 0.0) if world_y > 0 else (1.0, 1.0, 1.0)
-            results.append((y, x, color))
+        hit_1 = hit(xs)
+        if hit_1:
+            point = Ray.position(r, hit_1.t)
+            normal = normal_at(cast("Sphere", hit_1.object), point)
+            eye = -r.direction
+            # color = (1.0, 0.0, 0.0) if world_y > 0 else (1.0, 1.0, 1.0)
+            color = lighting(cast("Sphere", hit_1.object).material, light, point, eye, normal)
+            results.append((y, x, (color.red, color.green, color.blue)))
 
     return results
 
