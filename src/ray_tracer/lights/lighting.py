@@ -7,5 +7,7 @@ def lighting(
     m: Material, light: PointLight, position: CustomTuple, eye_vec: CustomTuple, normal_vec: CustomTuple
 ) -> ColorTuple:
     """Calculate the lighting at a point on a surface."""
+    effective_color = m.color * light.intensity
+    light_vec = (light.position - position).normalize()
 
     return ColorTuple(1, 2, 3)
