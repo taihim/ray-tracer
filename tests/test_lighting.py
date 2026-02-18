@@ -1,4 +1,4 @@
-from match import sqrt
+from math import sqrt
 
 from src.ray_tracer.lights import PointLight, lighting
 from src.ray_tracer.material import Material

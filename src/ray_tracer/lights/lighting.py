@@ -1,5 +1,3 @@
-from numpy.linalg import norm
-
 from src.ray_tracer.lights.point import PointLight
 from src.ray_tracer.material import Material
 from src.ray_tracer.tuples import ColorTuple, CustomTuple
@@ -20,7 +18,7 @@ def lighting(
         specular = ColorTuple(0, 0, 0)
     else:
         diffuse = effective_color * m.diffuse * light_dot_normal
-        reflect_vec = -light_vec.reflect(normal_vec)
+        reflect_vec = (-light_vec).reflect(normal_vec)
         reflect_dot_eye = reflect_vec.dot(eye_vec)
 
         if reflect_dot_eye <= 0:

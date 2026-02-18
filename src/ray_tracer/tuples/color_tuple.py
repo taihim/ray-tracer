@@ -47,10 +47,7 @@ class ColorTuple(CustomTuple):
     def __mul__(self, multiplier: float | Any) -> "ColorTuple":
         """Define scalar multiplication."""
         if isinstance(multiplier, float | int):
-            self.red *= multiplier
-            self.green *= multiplier
-            self.blue *= multiplier
-            return self
+            return ColorTuple(self.red * multiplier, self.green * multiplier, self.blue * multiplier)
 
         if isinstance(multiplier, ColorTuple):
             return ColorTuple(self.red * multiplier.red, self.green * multiplier.green, self.blue * multiplier.blue)
