@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![mypy](https://img.shields.io/badge/type--checked-mypy-blue.svg)](https://mypy-lang.org/)
-[![Tests](https://img.shields.io/badge/tests-138%20passed-brightgreen.svg)]()
+[![Tests](https://img.shields.io/badge/tests-144%20passed-brightgreen.svg)]()
 [![DeepSource](https://app.deepsource.com/gh/taihim/ray-tracer.svg/?label=code+coverage&show_trend=true&token=qhNUwL2P7FqyHO602IYkmmKW)](https://app.deepsource.com/gh/taihim/ray-tracer/)
 
 A ray tracer built from scratch in Python, following test-driven development.
