@@ -12,7 +12,7 @@ canvas_pixels = 250
 
 ray_origin = CustomTuple.point(0, 0, -5)
 s1 = Sphere()
-s1.material.color = ColorTuple(1, 1, 1)
+s1.material.color = ColorTuple(1, 0, 0)
 s1.set_transform(Transform().scale(1, 0.95, 1))
 # s1.set_transform(cast("Transform", Transform().shear(1, 0, 0, 0, 0, 0) * Transform().scale(0.5, 1, 1)))
 # s1.set_transform(cast("Transform", Transform().rotate_z(math.pi / 4) * Transform().scale(0.5, 1, 1)))

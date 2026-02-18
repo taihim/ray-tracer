@@ -9,6 +9,24 @@
 
 A ray tracer built from scratch in Python, following test-driven development.
 
+## Gallery
+
+### Transforms
+
+| Squashed `scale(1, 0.5, 1)` | Wide ellipsoid `scale(1.5, 0.5, 1)` | Tilted oval `rotate_z(π/4) · scale(0.5, 1, 1)` |
+|:---:|:---:|:---:|
+| ![squash](gallery/squash.png) | ![wide ellipsoid](gallery/wide_ellipsoid.png) | ![tilted oval](gallery/tilted_oval.png) |
+
+| Shear `shear(x∝y) · scale(0.5, 1, 1)` | | |
+|:---:|:---:|:---:|
+| ![shear](gallery/shear.png) | | |
+
+### Materials (Phong model)
+
+| Baseline `specular=0.9, shininess=200` | Matte `specular=0.05, shininess=10` | High-gloss `specular=1.0, shininess=400` |
+|:---:|:---:|:---:|
+| ![sphere](gallery/sphere.png) | ![matte](gallery/matte.png) | ![shiny](gallery/shiny.png) |
+
 ## Features
 
 - **Tuples & Points** - Custom 3D tuple implementation supporting points (w=1) and vectors (w=0) with full arithmetic operations (add, subtract, negate, dot product, cross product, normalization)
