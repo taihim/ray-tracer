@@ -8,7 +8,7 @@ from src.ray_tracer.lights.point import PointLight
 from src.ray_tracer.matrix.transforms import Transform
 from src.ray_tracer.sphere import normal_at
 
-canvas_pixels = 100
+canvas_pixels = 200
 
 ray_origin = CustomTuple.point(0, 0, -5)
 s1 = Sphere()
@@ -24,7 +24,7 @@ light_color = ColorTuple(1, 1, 1)
 light = PointLight(light_position, light_color)
 
 wall_z = 10
-wall_size = 6
+wall_size = 7
 pixel_size = wall_size / canvas_pixels
 half = wall_size / 2
 
