@@ -13,6 +13,8 @@ def intersect_world(world, ray):
         world:
         ray:
     
+    Returns:
+        
     """
     pass
 
