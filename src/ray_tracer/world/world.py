@@ -7,7 +7,13 @@ class World:
 
 
 def intersect_world(world, ray):
-    """Return intersections for a ray and all objects in a world object."""
+    """Return intersections for a ray and all objects in a world object.
+
+    Args:
+        world:
+        ray:
+    
+    """
     pass
 
     
