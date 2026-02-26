@@ -1,4 +1,5 @@
 import math
+import time
 from multiprocessing import Pool
 from typing import cast
 
@@ -8,7 +9,7 @@ from src.ray_tracer.lights.point import PointLight
 from src.ray_tracer.matrix.transforms import Transform
 from src.ray_tracer.sphere import normal_at
 
-canvas_pixels = 200
+canvas_pixels = 1000
 
 ray_origin = CustomTuple.point(0, 0, -5)
 s1 = Sphere()
@@ -18,6 +19,7 @@ s1.material.color = ColorTuple(1, 0, 0)
 # s1.set_transform(Transform().scale(1, 0.95, 1))
 # s1.set_transform(cast("Transform", Transform().shear(1, 0, 0, 0, 0, 0) * Transform().scale(0.5, 1, 1)))
 # s1.set_transform(cast("Transform", Transform().rotate_z(math.pi / 4) * Transform().scale(0.5, 1, 1)))
+s1_inverse = s1.transform.inverse()
 
 light_position = CustomTuple(-10, 10, -10, 1)
 light_color = ColorTuple(1, 1, 1)
@@ -38,7 +40,7 @@ def render_row(y: int) -> list[tuple[int, int, tuple[float, float, float]]]:
 
         position = CustomTuple.point(world_x, world_y, wall_z)
         r = Ray(ray_origin, (position - ray_origin).normalize())
-        xs = intersect(r, s1)
+        xs = intersect(r, s1, s1_inverse)
 
         hit_1 = hit(xs)
         if hit_1:
@@ -54,6 +56,7 @@ def render_row(y: int) -> list[tuple[int, int, tuple[float, float, float]]]:
 
 if __name__ == "__main__":
     cv = Canvas(canvas_pixels, canvas_pixels, (0, 0, 0))
+    start = time.perf_counter()
 
     with Pool() as pool:
         rows = pool.map(render_row, range(canvas_pixels))
@@ -61,6 +64,8 @@ if __name__ == "__main__":
     for row_results in rows:
         for y, x, color in row_results:
             cv.pixels[y][x] = ColorTuple(*color)
+    elapsed = time.perf_counter() - start
+    print(f"Render took {elapsed:.2f} seconds")
 
     data = cv.canvas_to_ppm()
     Canvas.save(data=data, path="./images/sphere.ppm")
