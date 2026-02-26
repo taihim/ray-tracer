@@ -1,0 +1,2 @@
+1. add llvm JIT compilation like tinyJIT (just for fun/learning)
+2. add cuda kernel implementations

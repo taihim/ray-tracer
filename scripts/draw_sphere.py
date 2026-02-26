@@ -9,7 +9,7 @@ from src.ray_tracer.lights.point import PointLight
 from src.ray_tracer.matrix.transforms import Transform
 from src.ray_tracer.sphere import normal_at
 
-canvas_pixels = 1000
+canvas_pixels = 200
 
 ray_origin = CustomTuple.point(0, 0, -5)
 s1 = Sphere()
