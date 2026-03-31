@@ -7,7 +7,7 @@
 [![Tests](https://img.shields.io/badge/tests-144%20passed-brightgreen.svg)]()
 [![DeepSource](https://app.deepsource.com/gh/taihim/ray-tracer.svg/?label=code+coverage&show_trend=true&token=qhNUwL2P7FqyHO602IYkmmKW)](https://app.deepsource.com/gh/taihim/ray-tracer/)
 
-A ray tracer built from scratch in Python, following Test 
+A ray tracer built from scratch in Python, following Test Driven
 
 ## Gallery
 
