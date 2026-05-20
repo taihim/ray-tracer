@@ -25,7 +25,7 @@ light = PointLight(CustomTuple(-10, 10, -10, 1), ColorTuple(1, 1, 1))
 s1: Sphere = Sphere()
 
 
-def render_row(y: int) -> list[tuple[int, int, tuple[float, float, float]]]:
+def render_row(y: int, inverse_transform: Transform) -> list[tuple[int, int, tuple[float, float, float]]]:
     """Render a single row of pixels."""
     results: list[tuple[int, int, tuple[float, float, float]]] = []
     world_y = HALF - PIXEL_SIZE * y
@@ -33,7 +33,7 @@ def render_row(y: int) -> list[tuple[int, int, tuple[float, float, float]]]:
         world_x = -HALF + PIXEL_SIZE * x
         position = CustomTuple.point(world_x, world_y, WALL_Z)
         r = Ray(ray_origin, (position - ray_origin).normalize())
-        xs = intersect(r, s1)
+        xs = intersect(r, s1, inverse_transform)
         hit_result = hit(xs)
         if hit_result:
             point = Ray.position(r, hit_result.t)
@@ -48,10 +48,11 @@ def render(sphere: Sphere, out_png: str) -> None:
     """Render a sphere and save the result as a PNG."""
     global s1
     s1 = sphere
+    s1_inverse = s1.transform.inverse()
 
     cv = Canvas(CANVAS_PIXELS, CANVAS_PIXELS, (0, 0, 0))
     with Pool() as pool:
-        rows = pool.map(render_row, range(CANVAS_PIXELS))
+        rows = pool.starmap(render_row, [(y, s1_inverse) for y in range(CANVAS_PIXELS)])
 
     for row_results in rows:
         for y, x, color in row_results:

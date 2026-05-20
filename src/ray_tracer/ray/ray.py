@@ -45,6 +45,7 @@ def intersect(ray: "Ray", sphere: Sphere, inverse_transform: Transform) -> tuple
     Args:
         ray: Ray object
         sphere: Sphere object
+        inverse_tramsform: Transform
 
     Returns:
         tuple containing the intersection points
