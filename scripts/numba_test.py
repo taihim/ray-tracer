@@ -84,6 +84,7 @@ def normal_at_sphere(px, py, pz, inv):
 
     return normalize(wnx, wny, wnz)
 
+
 @njit
 def lighting_phong(mat_r, mat_g, mat_b, mat_ambient, mat_diffuse, mat_specular, mat_shininess, lx, ly, lz, li_r, li_g, li_b, px, py, pz, ex, ey, ez, nx, ny, nz):
     eff_r = mat_r * li_r
@@ -101,6 +102,84 @@ def lighting_phong(mat_r, mat_g, mat_b, mat_ambient, mat_diffuse, mat_specular, 
     if light_dot_normal < 0:
         return amb_r, amb_g, amb_b
     
+    diff_r = eff_r * mat_diffuse * light_dot_normal
+    diff_g = eff_g * mat_diffuse * light_dot_normal
+    diff_b = eff_b * mat_diffuse * light_dot_normal
+
+    neg_ldx, neg_ldy, neg_ldz = -ldx, -ldy, -ldz
+    d = dot(neg_ldx, neg_ldy, neg_ldz, nx, ny, nz)
+    ref_x = neg_ldx - nx * 2.0 * d
+    ref_y = neg_ldy - ny * 2.0 * d
+    ref_z = neg_ldz - nz * 2.0 * d
+
+    reflect_dot_eye = dot(ref_x, ref_y, ref_z, ex, ey, ez)
+
+    if reflect_dot_eye <= 0:
+        return amb_r + diff_r, amb_g + diff_g, amb_b + diff_b
+
+    factor = reflect_dot_eye ** mat_shininess
+    spec_r = li_r * mat_specular * factor
+    spec_g = li_g * mat_specular * factor
+    spec_b = li_b * mat_specular * factor
+    
+    return amb_r + diff_r + spec_r, amb_g + diff_g + spec_g, amb_b + diff_b + spec_b 
+
+# def reflect(self, normal: "CustomTuple") -> "CustomTuple":
+#         """Reflect a vector about a normal vector."""
+#         if compare_float(self.w, 0.0) and compare_float(normal.w, 0.0):
+#             return self - (normal * 2 * self.dot(normal))
+#         raise ValueError("Can only reflect vectors.")
+
+
+
+
+# @njit
+# def lighting_phong(
+#     # material: color rgb, ambient, diffuse, specular, shininess
+#     mat_r, mat_g, mat_b, mat_ambient, mat_diffuse, mat_specular, mat_shininess,
+#     # light: position xyz, intensity rgb
+#     lx, ly, lz, li_r, li_g, li_b,
+#     # hit point, eye vector, normal vector
+#     px, py, pz, ex, ey, ez, nx, ny, nz,
+# ):
+#     # effective_color = material.color * light.intensity
+#     eff_r = mat_r * li_r
+#     eff_g = mat_g * li_g
+#     eff_b = mat_b * li_b
+#     # light direction
+#     ldx, ldy, ldz = normalize(lx - px, ly - py, lz - pz)
+#     # ambient
+#     amb_r = eff_r * mat_ambient
+#     amb_g = eff_g * mat_ambient
+#     amb_b = eff_b * mat_ambient
+#     light_dot_normal = dot(ldx, ldy, ldz, nx, ny, nz)
+#     if light_dot_normal < 0:
+#         return amb_r, amb_g, amb_b
+#     # diffuse
+#     dif_r = eff_r * mat_diffuse * light_dot_normal
+#     dif_g = eff_g * mat_diffuse * light_dot_normal
+#     dif_b = eff_b * mat_diffuse * light_dot_normal
+#     # reflect(-light_vec, normal)
+#     # reflect formula: incoming - normal * 2 * dot(incoming, normal)
+#     neg_ldx, neg_ldy, neg_ldz = -ldx, -ldy, -ldz
+#     d = dot(neg_ldx, neg_ldy, neg_ldz, nx, ny, nz)
+#     ref_x = neg_ldx - nx * 2.0 * d
+#     ref_y = neg_ldy - ny * 2.0 * d
+#     ref_z = neg_ldz - nz * 2.0 * d
+#     reflect_dot_eye = dot(ref_x, ref_y, ref_z, ex, ey, ez)
+#     if reflect_dot_eye <= 0:
+#         return amb_r + dif_r, amb_g + dif_g, amb_b + dif_b
+#     factor = reflect_dot_eye ** mat_shininess
+#     spec_r = li_r * mat_specular * factor
+#     spec_g = li_g * mat_specular * factor
+#     spec_b = li_b * mat_specular * factor
+#     return amb_r + dif_r + spec_r, amb_g + dif_g + spec_g, amb_b + dif_b + spec_b
+
+
+
+
+
+
 
 
 
