@@ -2,9 +2,13 @@
 import math
 import os
 import subprocess
+import time
 from multiprocessing import Pool
 from typing import cast
 
+import numpy as np
+
+from scripts.numba_test import render_row_numba
 from src.ray_tracer import Canvas, ColorTuple, CustomTuple, Ray, Sphere, hit, intersect
 from src.ray_tracer.lights import lighting
 from src.ray_tracer.lights.point import PointLight
@@ -45,22 +49,67 @@ def render_row(y: int, inverse_transform: Transform) -> list[tuple[int, int, tup
 
 
 def render(sphere: Sphere, out_png: str) -> None:
-    """Render a sphere and save the result as a PNG."""
+    """Render a sphere and save the result as a PNG (original Pool-based version)."""
     global s1
     s1 = sphere
     s1_inverse = s1.transform.inverse()
 
     cv = Canvas(CANVAS_PIXELS, CANVAS_PIXELS, (0, 0, 0))
+
+    start = time.perf_counter()
     with Pool() as pool:
         rows = pool.starmap(render_row, [(y, s1_inverse) for y in range(CANVAS_PIXELS)])
 
     for row_results in rows:
         for y, x, color in row_results:
             cv.pixels[y][x] = ColorTuple(*color)
+    elapsed = time.perf_counter() - start
+    print(f"  [original] render time: {elapsed:.3f}s")
 
     ppm_path = out_png.replace(".png", ".ppm")
     Canvas.save(data=cv.canvas_to_ppm(), path=ppm_path)
-    subprocess.run(["magick", ppm_path, out_png], check=True)
+    subprocess.run(["convert", ppm_path, out_png], check=True)
+    os.remove(ppm_path)
+    print(f"  saved {out_png}")
+
+
+def render_numba(sphere: Sphere, out_png: str) -> None:
+    """Render a sphere and save the result as a PNG (Numba JIT version)."""
+    inv_np = np.array(sphere.transform.inverse().transformation_matrix.data, dtype=np.float64)
+    mat = sphere.material
+
+    cv = Canvas(CANVAS_PIXELS, CANVAS_PIXELS, (0, 0, 0))
+
+    # Warm up numba (first call compiles)
+    render_row_numba(
+        0, CANVAS_PIXELS, WALL_SIZE, HALF, WALL_Z,
+        ray_origin.x, ray_origin.y, ray_origin.z,
+        light.position.x, light.position.y, light.position.z,
+        light.intensity.red, light.intensity.green, light.intensity.blue,
+        mat.color.red, mat.color.green, mat.color.blue,
+        mat.ambient, mat.diffuse, mat.specular, mat.shininess,
+        inv_np,
+    )
+
+    start = time.perf_counter()
+    for y in range(CANVAS_PIXELS):
+        row = render_row_numba(
+            y, CANVAS_PIXELS, WALL_SIZE, HALF, WALL_Z,
+            ray_origin.x, ray_origin.y, ray_origin.z,
+            light.position.x, light.position.y, light.position.z,
+            light.intensity.red, light.intensity.green, light.intensity.blue,
+            mat.color.red, mat.color.green, mat.color.blue,
+            mat.ambient, mat.diffuse, mat.specular, mat.shininess,
+            inv_np,
+        )
+        for x in range(CANVAS_PIXELS):
+            cv.pixels[y][x] = ColorTuple(row[x, 0], row[x, 1], row[x, 2])
+    elapsed = time.perf_counter() - start
+    print(f"  [numba] render time: {elapsed:.3f}s")
+
+    ppm_path = out_png.replace(".png", ".ppm")
+    Canvas.save(data=cv.canvas_to_ppm(), path=ppm_path)
+    subprocess.run(["convert", ppm_path, out_png], check=True)
     os.remove(ppm_path)
     print(f"  saved {out_png}")
 
@@ -127,6 +176,7 @@ variants: list[tuple[str, str, Sphere]] = [
 if __name__ == "__main__":
     os.makedirs(GALLERY, exist_ok=True)
     for slug, label, sphere in variants:
-        print(f"Rendering: {label}")
+        print(f"\nRendering: {label}")
         render(sphere, f"{GALLERY}/{slug}.png")
-    print("Done.")
+        render_numba(sphere, f"{GALLERY}/{slug}_numba.png")
+    print("\nDone.")
