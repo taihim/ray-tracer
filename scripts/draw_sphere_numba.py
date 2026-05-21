@@ -11,7 +11,7 @@ from src.ray_tracer.lights.point import PointLight
 from src.ray_tracer.matrix.transforms import Transform
 from src.ray_tracer.sphere import normal_at
 
-canvas_pixels = 1000
+canvas_pixels = 800
 
 ray_origin = CustomTuple.point(0, 0, -5)
 s1 = Sphere()
@@ -65,7 +65,8 @@ def save_ppm_p6(image, path):
         f.write(clamped.tobytes())
 
 if __name__ == "__main__":
-    cv = Canvas(canvas_pixels, canvas_pixels, (0, 0, 0))
+    # cv = Canvas(canvas_pixels, canvas_pixels, (0, 0, 0))
+
     mat = s1.material
     inv_np = np.array(s1.transform.inverse().transformation_matrix.data, dtype=np.float64)
     
@@ -75,6 +76,8 @@ if __name__ == "__main__":
     #                 light.intensity.red, light.intensity.green, light.intensity.blue,
     #                 mat.color.red, mat.color.green, mat.color.blue, mat.ambient, mat.diffuse, mat.specular, mat.shininess,
     #                 inv_np)
+
+
     render_image_numba(1, wall_size, half, wall_z, 
                     ray_origin.x, ray_origin.y, ray_origin.z, 
                     light.position.x, light.position.y, light.position.z,
@@ -82,6 +85,7 @@ if __name__ == "__main__":
                     mat.color.red, mat.color.green, mat.color.blue, mat.ambient, mat.diffuse, mat.specular, mat.shininess,
                     inv_np)
     start = time.perf_counter()
+
     image = render_image_numba(canvas_pixels, wall_size, half, wall_z, 
                     ray_origin.x, ray_origin.y, ray_origin.z, 
                     light.position.x, light.position.y, light.position.z,
