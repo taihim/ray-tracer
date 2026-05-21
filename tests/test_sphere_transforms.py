@@ -19,7 +19,7 @@ def test_sphere_transform_scale_intersection():
     transform = Transform().scale(2, 2, 2)
     sphere.set_transform(transform)
     ray = Ray(CustomTuple(0, 0, -5, 1), CustomTuple(0, 0, 1))
-    xs = intersect(ray, sphere)
+    xs = intersect(ray, sphere, sphere.transform.inverse())
     assert len(xs) == 2
     assert xs[0].t == 3
     assert xs[1].t == 7
@@ -30,5 +30,5 @@ def test_sphere_transform_translate_intersection():
     transform = Transform().translate(5, 0, 0)
     sphere.set_transform(transform)
     ray = Ray(CustomTuple(0, 0, -5, 1), CustomTuple(0, 0, 1))
-    xs = intersect(ray, sphere)
+    xs = intersect(ray, sphere, sphere.transform.inverse())
     assert len(xs) == 0
