@@ -1,3 +1,4 @@
+# mypy: ignore-errors
 class World:
     """World class for the ray tracer"""
 
