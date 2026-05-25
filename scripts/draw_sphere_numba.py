@@ -1,4 +1,5 @@
 import math
+from pathlib import Path
 import time
 from multiprocessing import Pool
 from typing import cast
@@ -32,6 +33,7 @@ def save_ppm_from_array(image, path):
     """Save image as PPM P3 (text) format with 70-char line wrapping."""
     h, w, _ = image.shape
     max_line_len = 70
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
 
     with open(path, "w") as f:
         f.write(f"P3\n{w} {h}\n255\n")
@@ -60,6 +62,7 @@ def save_ppm_p6(image, path):
     np.clip(image, 0,1, out=image)
     image *= 255
     clamped = image.astype(np.uint8)
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
     with open(path, "wb") as f:
         f.write(f"P6\n{w} {h}\n255\n".encode())
         f.write(clamped.tobytes())

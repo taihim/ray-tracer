@@ -32,10 +32,15 @@
             env = {
               LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
                 pkgs.stdenv.cc.cc.lib
+                pkgs.zlib
               ];
               UV_NO_MANAGED_PYTHON = "1";
               UV_PYTHON_DOWNLOADS = "never";
             };
+           
+            shellHook = ''
+             export PS1="(rt-dev) $PS1"
+            '';
           };
         }
       );
