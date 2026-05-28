@@ -4,10 +4,11 @@ from .matrix import RTMatrix
 from .ray import Ray, hit, intersect
 from .sphere import Sphere
 from .tuples import ColorTuple, CustomTuple
-from .world import World
+from .world import World, intersect_world
 
 __all__ = [
-    "World"
+    "World",
+    "intersect_world",
     "Canvas",
     "ColorTuple",
     "CustomTuple",

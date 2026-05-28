@@ -8,7 +8,7 @@ from typing import cast
 
 import numpy as np
 
-from scripts.numba_test import render_row_numba
+from scripts.numba_sample import render_row_numba
 from src.ray_tracer import Canvas, ColorTuple, CustomTuple, Ray, Sphere, hit, intersect
 from src.ray_tracer.lights import lighting
 from src.ray_tracer.lights.point import PointLight

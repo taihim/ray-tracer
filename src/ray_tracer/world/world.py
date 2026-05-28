@@ -1,16 +1,17 @@
-from src.ray_tracer.ray import Ray
+from src.ray_tracer.ray import Ray, intersect
 from src.ray_tracer.sphere import Sphere
 from src.ray_tracer.lights import PointLight
 from src.ray_tracer.material import Material
+from src.ray_tracer.intersection import Intersection, intersections
 from src.ray_tracer.matrix.transforms import Transform
 from src.ray_tracer.tuples import ColorTuple, CustomTuple
 
 class World:
     """World class for the ray tracer"""
 
-    def __init__(self, light: PointLight | None=None, objects: list[Sphere] | None=None) -> None:
+    def __init__(self, light: PointLight | None = None, objects: list[Sphere] | None = None) -> None:
         self.light = light
-        self.objects = objects
+        self.objects = objects or []
 
     @staticmethod
     def default_world() -> "World":
@@ -28,7 +29,7 @@ class World:
 
 
 
-def intersect_world(world: "World", ray: Ray) -> None:
+def intersect_world(world: "World", ray: Ray) -> tuple[Intersection, ...]:
     """Return intersections for a ray and all objects in a world object.
 
     Args:
@@ -38,6 +39,11 @@ def intersect_world(world: "World", ray: Ray) -> None:
     Returns:
         
     """
-    return None
+    ixs: list[Intersection] = []
+    for obj in world.objects:
+        inv = obj.transform.inverse()
+        ixs.extend(intersect(ray, obj, inv))
+
+    return intersections(*ixs)
 
     

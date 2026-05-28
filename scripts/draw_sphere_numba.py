@@ -3,7 +3,7 @@ from pathlib import Path
 import time
 from multiprocessing import Pool
 from typing import cast
-from scripts.numba_test import render_image_numba
+from scripts.numba_sample import render_image_numba
 import numpy as np
 
 from src.ray_tracer import Canvas, ColorTuple, CustomTuple, Ray, Sphere, hit, intersect
